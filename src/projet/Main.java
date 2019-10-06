@@ -1,6 +1,6 @@
 package projet;
 
-
+import java.io.*; 
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,8 @@ import projet.VerifLocalisation;
 
 public class Main {	
 	
-	private ArrayList[] map = new ArrayList[35];
+	private ArrayList<Integer> map = new ArrayList(35);
+	
 	/*
 	 * contient la position du robot, sa direction et les coordonnées de destination
 	 */
@@ -49,7 +50,26 @@ public class Main {
 		
 	   }
 	
+	
 	public void initialise() {
+		//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
+		map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
+		map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
+		map.add(0);map.add(2);map.add(2);map.add(1);map.add(03);
+		map.add(0);map.add(0);map.add(2);map.add(1);map.add(1);
+		map.add(0);map.add(3);map.add(3);map.add(3);map.add(1);
+		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
+		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
+		
+		//map garde de la nuit (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
+		/*map.add(4);map.add(2);map.add(0);map.add(0);map.add(0);
+		map.add(1);map.add(2);map.add(0);map.add(0);map.add(0);
+		map.add(1);map.add(2);map.add(2);map.add(0);map.add(0);
+		map.add(1);map.add(1);map.add(2);map.add(0);map.add(0);
+		map.add(1);map.add(3);map.add(3);map.add(3);map.add(0);
+		map.add(1);map.add(1);map.add(1);map.add(4);map.add(2);
+		map.add(1);map.add(1);map.add(1);map.add(1);map.add(2);*/
+		
 		portRoueD= LocalEV3.get().getPort("C");
 		portRoueG= LocalEV3.get().getPort("B");
 		portDistance= LocalEV3.get().getPort("S4");

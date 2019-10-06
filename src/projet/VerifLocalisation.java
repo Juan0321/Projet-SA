@@ -15,7 +15,7 @@ import lejos.robotics.subsumption.Behavior;
  */
 public class VerifLocalisation implements Behavior{
 	
-	private ArrayList[] map = new ArrayList[35];
+	private ArrayList<Integer> map = new ArrayList(35);
 	private int[] state = new int[3];
 	EV3ColorSensor color;
 	private float[] sample;
@@ -24,8 +24,8 @@ public class VerifLocalisation implements Behavior{
 	private int direction;
 
 	
-	public VerifLocalisation(ArrayList[] map, int[]state, List<Integer> path, EV3ColorSensor color, MovePilot pilot) {
-		this.map = map;
+	public VerifLocalisation(ArrayList<Integer> map2, int[]state, List<Integer> path, EV3ColorSensor color, MovePilot pilot) {
+		this.map = map2;
 		this.state = state;
 		this.color = color;
 		this.path = path;

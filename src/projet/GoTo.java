@@ -14,12 +14,12 @@ import lejos.robotics.subsumption.Behavior;
  */
 public class GoTo implements Behavior{
 	
-	private ArrayList[] map;
+	private ArrayList<Integer> map;
 	private int[] state;
 	private List<Integer> path;
 	
-	public GoTo(ArrayList[] map, int[]state, List<Integer> path){
-		this.map = map;
+	public GoTo(ArrayList<Integer> map2, int[]state, List<Integer> path){
+		this.map = map2;
 		this.state = state;
 		this.path = path;
 	}
