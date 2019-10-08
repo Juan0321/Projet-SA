@@ -1,15 +1,17 @@
 package projet;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dijkstra {
 	// A utility function to find the vertex with minimum distance value, 
     // from the set of vertices not yet included in shortest path tree 
-    static final int V = 9; 
+    static final int V = 35; 
     int minDistance(int dist[], Boolean sptSet[]) 
     { 
         // Initialize min value 
-        int min = Integer.MAX_VALUE, min_index = -1; 
+        int min = Integer.MAX_VALUE;
+        int min_index = -1; 
   
         for (int v = 0; v < V; v++) 
             if (sptSet[v] == false && dist[v] <= min) { 
@@ -21,18 +23,21 @@ public class Dijkstra {
     } 
   
     // A utility function to print the constructed distance array 
-    void printSolution(int dist[]) 
+    void printSolution(int dist[], List<List<Integer>> chemin) 
     { 
-        System.out.println("Vertex \t\t Distance from Source"); 
+        System.out.println("Vertex \t\t Distance \t\t chemin"); 
         for (int i = 0; i < V; i++) 
-            System.out.println(i + " \t\t " + dist[i]); 
+            System.out.println(i + " \t\t " + dist[i] + " \t\t\t " + see(chemin.get(i))); 
     } 
   
-    // Function that implements Dijkstra's single source shortest path 
+   
+
+	// Function that implements Dijkstra's single source shortest path 
     // algorithm for a graph represented using adjacency matrix 
     // representation 
     void dijkstra(int graph[][], int src) 
     { 
+    	List<List<Integer>>  chemin= new ArrayList<List<Integer>>() ;
         int dist[] = new int[V]; // The output array. dist[i] will hold 
         // the shortest distance from src to i 
   
@@ -44,6 +49,7 @@ public class Dijkstra {
         for (int i = 0; i < V; i++) { 
             dist[i] = Integer.MAX_VALUE; 
             sptSet[i] = false; 
+            chemin.add(new ArrayList<Integer>());
         } 
   
         // Distance of source vertex from itself is always 0 
@@ -57,7 +63,8 @@ public class Dijkstra {
             int u = minDistance(dist, sptSet); 
   
             // Mark the picked vertex as processed 
-            sptSet[u] = true; 
+            sptSet[u] = true;
+            chemin.get(u).add(u);
   
             // Update dist value of the adjacent vertices of the 
             // picked vertex. 
@@ -66,19 +73,22 @@ public class Dijkstra {
                 // Update dist[v] only if is not in sptSet, there is an 
                 // edge from u to v, and total weight of path from src to 
                 // v through u is smaller than current value of dist[v] 
-                if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v]) 
+                if (!sptSet[v] && graph[u][v] != 0 && dist[u] != Integer.MAX_VALUE && dist[u] + graph[u][v] < dist[v]){ 
                     dist[v] = dist[u] + graph[u][v]; 
+                    chemin.get(v).clear();
+                    chemin.get(v).addAll(chemin.get(u));
+                }
         } 
   
         // print the constructed distance array 
-        printSolution(dist); 
+        printSolution(dist, chemin); 
     } 
   
     // Driver method 
     public static void main(String[] args) 
     { 
-        /* Let us create the example graph discussed above */
-       /* int graph[][] = new int[][] { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, 
+        /* Let us create the example graph discussed above *
+       int graph[][] = new int[][] { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, 
                                       { 4, 0, 8, 0, 0, 0, 0, 11, 0 }, 
                                       { 0, 8, 0, 7, 0, 4, 0, 0, 2 }, 
                                       { 0, 0, 7, 0, 9, 14, 0, 0, 0 }, 
@@ -87,20 +97,61 @@ public class Dijkstra {
                                       { 0, 0, 0, 0, 0, 2, 0, 1, 6 }, 
                                       { 8, 11, 0, 0, 0, 0, 1, 0, 7 }, 
                                       { 0, 0, 2, 0, 0, 0, 6, 7, 0 } }; */
-    	ArrayList[] map = new ArrayList[35];
+    	ArrayList<Integer> map = new ArrayList<Integer>(35);
+    	map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
+		map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
+		map.add(0);map.add(2);map.add(2);map.add(1);map.add(3);
+		map.add(0);map.add(0);map.add(2);map.add(1);map.add(1);
+		map.add(0);map.add(3);map.add(3);map.add(3);map.add(1);
+		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
+		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
     	int graph[][] = GrapheCreator(map);
         Dijkstra t = new Dijkstra (); 
-        t.dijkstra(graph, 0); 
+        t.dijkstra(graph, 4); 
+        //see(graph);
+       // see(map);
     }
+    
+    
+    private String see(List list) {
+    	String chemin="";
+    	for(int i=0; i<list.size() ; i++){
+    		chemin+=list.get(i);
+    	}
+		return chemin;
+	}
 
-    //fonction pour cree le graphe a partir du MAP
-	private static int[][] GrapheCreator(ArrayList[] map) {
-		int graph[][] = new int[][] {{}};
+    private static void see(ArrayList<Integer> map) {
+    	for(int i=0; i<35 ; i++){
+    		System.out.print(map.get(i));
+    	}
+	}
+
+	private static void see(int[][] graph) {
 		for(int i=0; i<35 ; i++){
-			for(int j=0; i<35 ; j++){
-				if (i==j+1 || i==j-1 || i==j+5 || i==j-5)
-					graph[i][j]= (int) map[i].get(i);
-				graph[i][j]=0;
+			for(int j=0; j<34 ; j++){
+				System.out.print(graph[i][j]);			
+			}
+			System.out.println(graph[i][34]);
+		}
+		
+	}
+
+	//fonction pour cree le graphe a partir du MAP
+	private static int[][] GrapheCreator(ArrayList<Integer> map) {
+		int graph[][] = new int[35][35];
+		for(int i=0; i<35 ; i++){
+			for(int j=0; j<35 ; j++){
+				if ((i==j+1 && i%5!=0) || (i==j-1 && i%5!=4) || i==j+5 || i==j-5){
+					if (map.get(i)== 3){
+						graph[i][j]= 5;
+					}else if(map.get(i)==2){
+						graph[i][j]= 6;
+					}else{
+						graph[i][j]= 1;
+					}
+				}
+				else {graph[i][j]=0;}
 			}
 		}
 		return graph;

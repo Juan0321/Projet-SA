@@ -22,7 +22,7 @@ public class StopBehavior implements Behavior {
 	
 	@Override
 	public boolean takeControl() {
-		return Button.ENTER.isDown();
+		return Button.LEFT.isDown();
 	}
 
 	@Override

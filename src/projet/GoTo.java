@@ -25,21 +25,14 @@ public class GoTo implements Behavior{
 	}
 	@Override
 	public boolean takeControl() {
-		return state[0] == state[2];
+		return Button.DOWN.isDown()&& state[0]==state[2];
 	}
 
 	@Override
 	public void action() {
-		Button.waitForAnyPress();
+		//on commence au sud
+		path.add(4);path.add(3);path.add(2);path.add(1);path.add(0);
 		
-		if(Button.DOWN.isDown()){
-			//on commence au sud
-			path.add(33);path.add(32);path.add(31);path.add(26);
-		}
-		if(Button.UP.isDown()){
-			//on commence au nord
-			
-		}
 	}
 
 	@Override
