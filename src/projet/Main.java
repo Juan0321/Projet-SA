@@ -23,9 +23,8 @@ public class Main {
 	//verif git
 	private ArrayList<Integer> map = new ArrayList(35);
 	
-	/*
-	 * contient la position du robot, sa direction et les coordonnées de destination
-	 */
+	
+	// contient la position du robot, sa direction et les coordonnées de destination
 	private int[] state = new int[3];
 	private List<Integer> path;
 	
@@ -52,23 +51,36 @@ public class Main {
 	
 	
 	public void initialise() {
-		//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
-		map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
-		map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
-		map.add(0);map.add(2);map.add(2);map.add(1);map.add(03);
-		map.add(0);map.add(0);map.add(2);map.add(1);map.add(1);
-		map.add(0);map.add(3);map.add(3);map.add(3);map.add(1);
-		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
-		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
+		Boolean Sauvage=true;
+		Boolean GardeDeLaNuit=false;
 		
-		//map garde de la nuit (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
-		/*map.add(4);map.add(2);map.add(0);map.add(0);map.add(0);
-		map.add(1);map.add(2);map.add(0);map.add(0);map.add(0);
-		map.add(1);map.add(2);map.add(2);map.add(0);map.add(0);
-		map.add(1);map.add(1);map.add(2);map.add(0);map.add(0);
-		map.add(1);map.add(3);map.add(3);map.add(3);map.add(0);
-		map.add(1);map.add(1);map.add(1);map.add(4);map.add(2);
-		map.add(1);map.add(1);map.add(1);map.add(1);map.add(2);*/
+		if (Sauvage==true){
+			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
+			map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
+			map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
+			map.add(0);map.add(2);map.add(2);map.add(1);map.add(3);
+			map.add(0);map.add(0);map.add(2);map.add(1);map.add(1);
+			map.add(0);map.add(3);map.add(3);map.add(3);map.add(1);
+			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
+			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
+			
+			//depart case 0, orienté vers la gauche, destination de la case 0
+			state[0]=4;state[1]=180;state[2]=0; 
+		}
+		
+		if(GardeDeLaNuit==true){
+			//map garde de la nuit (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
+			map.add(4);map.add(2);map.add(0);map.add(0);map.add(0);
+			map.add(1);map.add(2);map.add(0);map.add(0);map.add(0);
+			map.add(1);map.add(2);map.add(2);map.add(0);map.add(0);
+			map.add(1);map.add(1);map.add(2);map.add(0);map.add(0);
+			map.add(1);map.add(3);map.add(3);map.add(3);map.add(0);
+			map.add(1);map.add(1);map.add(1);map.add(4);map.add(2);
+			map.add(1);map.add(1);map.add(1);map.add(1);map.add(2);
+			
+			//depart case 30, orienté vers la droite, destination de la case 28
+			state[0]=30;state[1]=90;state[2]=28; 
+		}
 		
 		portRoueD= LocalEV3.get().getPort("C");
 		portRoueG= LocalEV3.get().getPort("B");
