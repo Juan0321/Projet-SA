@@ -1,6 +1,5 @@
 package projet;
 
-import java.awt.List;
 
 import lejos.robotics.subsumption.Behavior;
 
@@ -10,7 +9,6 @@ import lejos.robotics.subsumption.Behavior;
 public class NextStep implements Behavior{
 	
 	private float[] state = new float[3];
-	private List path = new List ();
 	
 	@Override
 	public boolean takeControl() {

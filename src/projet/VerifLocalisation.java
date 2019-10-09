@@ -43,6 +43,7 @@ public class VerifLocalisation implements Behavior{
 	 * @see lejos.robotics.subsumption.Behavior#action()
 	 */
 	public void action() {
+		System.out.println("ligne noir");
 		pilot.stop();
 		//pilot.travel(60);
 		//while(pilot.isMoving());
@@ -54,6 +55,8 @@ public class VerifLocalisation implements Behavior{
 
 	private void turn() {
 		pilot.rotate(state[1]-direction);
+		System.out.println("rotate "+ (state[1]-direction));
+		while(pilot.isMoving());
 		state[1]=direction;
 	}
 	private void verifposition() {
