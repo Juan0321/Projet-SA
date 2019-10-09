@@ -55,8 +55,9 @@ public class Main {
 		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		
 		/* 0 pour aller au camp militaire le plus proche
-		 * 1 pour aller a la ville adverse 
-		 * 2 pour le modele proie-prédateur
+		 * 1 pour returne a notre ville
+		 * 2 pour aller a la ville adverse 
+		 * 3 pour le modele proie-prédateur
 		 */
 		state[4]=0;
 		

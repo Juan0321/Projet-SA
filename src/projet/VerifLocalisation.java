@@ -54,6 +54,7 @@ public class VerifLocalisation implements Behavior{
 
 	private void turn() {
 		pilot.rotate(state[1]-direction);
+		state[1]=direction;
 	}
 	private void verifposition() {
 		if(state[0]-path.get(0)==-1);//right

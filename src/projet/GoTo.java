@@ -17,6 +17,7 @@ public class GoTo implements Behavior{
 	private ArrayList<Integer> map;
 	private int[] state;
 	private List<Integer> path;
+	private List<Integer> retour;
 	
 	public GoTo(ArrayList<Integer> map2, int[]state, List<Integer> path){
 		this.map = map2;
@@ -32,8 +33,20 @@ public class GoTo implements Behavior{
 	public void action() {
 		Button.DOWN.waitForPress();
 		if(state[3]==0){
-			if(state[4]==0);
+			if(state[4]==0){
 				path.add(4);path.add(3);path.add(2);path.add(1);path.add(0);
+				state[4]=1;
+				retour.add(0);retour.add(1);retour.add(2);retour.add(3);retour.add(4);
+			}
+			if(state[4]==1){
+				path.clear();
+				path.addAll(retour);
+			}
+			if(state[4]==2){
+				path.add(4);path.add(3);path.add(2);path.add(1);path.add(0);
+				state[4]=1;
+			}
+			
 		}
 		else{
 			if(state[4]==0);
