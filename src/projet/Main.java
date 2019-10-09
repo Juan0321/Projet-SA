@@ -1,5 +1,6 @@
 package projet;
 
+import java.awt.Color;
 import java.io.*; 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Main {
 	
 	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit) et ca mission)
 	private int[] state = new int[5];
-	private List<Integer> path;
+	private List<Integer> path= new ArrayList<Integer>();
 	
 	Port portRoueD;
 	Port portRoueG;
@@ -51,7 +52,7 @@ public class Main {
 	
 	
 	public void initialise() {
-		state[2]=0;
+		state[2]=4;//case de depart sauvageon 4; case de depart garde de la nuit 30
 		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		
 		/* 0 pour aller au camp militaire le plus proche
@@ -98,6 +99,7 @@ public class Main {
 		EV3UltrasonicSensor ultrasonicSensor = new EV3UltrasonicSensor(portDistance);
 		EV3TouchSensor touchSensor = new EV3TouchSensor(portTouch);
 		EV3ColorSensor colorSensor = new EV3ColorSensor(portColor);
+		colorSensor.setFloodlight(lejos.robotics.Color.WHITE);
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
 		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-61);
@@ -110,14 +112,13 @@ public class Main {
 		Behavior b2 = new VerifLocalisation(map, state, path, colorSensor, pilot);
 	    Behavior b1 = new DriveForward(pilot);
 	    Behavior b3 = new GoTo(map, state, path);
-	    Behavior b4 = new NextStep();
-	    //Behavior b2 = new BatteryLow(6.5f);
+	   
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
-	    Behavior [] bArray = {b3, b2, b1, b4, b5};
+	    Behavior [] bArray = { b1, b2, b3, b5};
 	    Arbitrator arbi = new Arbitrator(bArray);
 	      
-	    if(b4 instanceof StopBehavior) {
-	    	StopBehavior b = (StopBehavior)b4;
+	    if(b5 instanceof StopBehavior) {
+	    	StopBehavior b = (StopBehavior)b5;
 	    	b.setter(arbi);
 	    }
 	    arbi.go();
