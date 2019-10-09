@@ -5,6 +5,7 @@ import java.util.List;
 
 import lejos.hardware.Button;
 import lejos.robotics.subsumption.Behavior;
+//verif 
 
 /*
  * donne la coordonnée de destination,

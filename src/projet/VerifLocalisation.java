@@ -9,6 +9,7 @@ import lejos.robotics.Color;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
+//verif 
 
 /*
  * prend le control quand le robot passe sur une ligne noir,

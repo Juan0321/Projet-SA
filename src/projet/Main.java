@@ -21,7 +21,7 @@ import projet.StopBehavior;
 import projet.VerifLocalisation;
 
 public class Main {	
-	//verif git
+	//verif 
 	private ArrayList<Integer> map = new ArrayList(35);
 	
 	
