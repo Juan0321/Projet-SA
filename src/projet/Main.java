@@ -24,8 +24,8 @@ public class Main {
 	private ArrayList<Integer> map = new ArrayList(35);
 	
 	
-	// contient la position du robot, sa direction et les coordonnées de destination
-	private int[] state = new int[3];
+	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit) et ca mission)
+	private int[] state = new int[5];
 	private List<Integer> path;
 	
 	Port portRoueD;
@@ -51,10 +51,16 @@ public class Main {
 	
 	
 	public void initialise() {
-		Boolean Sauvage=true;
-		Boolean GardeDeLaNuit=false;
+		state[2]=0;
+		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		
-		if (Sauvage==true){
+		/* 0 pour aller au camp militaire le plus proche
+		 * 1 pour aller a la ville adverse 
+		 * 2 pour le modele proie-prédateur
+		 */
+		state[4]=0;
+		
+		if (state[3]==0){
 			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
 			map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
 			map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
@@ -64,11 +70,11 @@ public class Main {
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			
-			//depart case 0, orienté vers la gauche, destination de la case 0
-			state[0]=4;state[1]=180;state[2]=0; 
+			//depart case 0, orienté vers la gauche
+			state[0]=4;state[1]=180;
 		}
 		
-		if(GardeDeLaNuit==true){
+		if(state[3]==1){
 			//map garde de la nuit (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
 			map.add(4);map.add(2);map.add(0);map.add(0);map.add(0);
 			map.add(1);map.add(2);map.add(0);map.add(0);map.add(0);
@@ -78,8 +84,8 @@ public class Main {
 			map.add(1);map.add(1);map.add(1);map.add(4);map.add(2);
 			map.add(1);map.add(1);map.add(1);map.add(1);map.add(2);
 			
-			//depart case 30, orienté vers la droite, destination de la case 28
-			state[0]=30;state[1]=90;state[2]=28; 
+			//depart case 30, orienté vers la droite
+			state[0]=30;state[1]=90; 
 		}
 		
 		portRoueD= LocalEV3.get().getPort("C");
