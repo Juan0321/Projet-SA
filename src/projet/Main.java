@@ -52,8 +52,8 @@ public class Main {
 	
 	
 	public void initialise() {
-		state[2]=4;//case de depart sauvageon 4; case de depart garde de la nuit 30
-		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
+		state[2]=30;//case de depart sauvageon 4; case de depart garde de la nuit 30
+		state[3]=1;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		
 		/* 0 pour aller au camp militaire le plus proche
 		 * 1 pour returne a notre ville
@@ -102,8 +102,8 @@ public class Main {
 		colorSensor.setFloodlight(lejos.robotics.Color.WHITE);
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
-		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-61);
-		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(61);
+		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-54);
+		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(54);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
 		MovePilot pilot = new MovePilot(chassis);
 		pilot.setAngularSpeed(20);
