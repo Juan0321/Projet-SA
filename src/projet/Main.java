@@ -107,12 +107,13 @@ public class Main {
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
 		MovePilot pilot = new MovePilot(chassis);
 		pilot.setAngularSpeed(20);
+		pilot.setLinearSpeed(50);
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
 		float[] sample = new float[4];
 		
 		Behavior b2 = new VerifLocalisation(map, state, path, colorSensor, pilot);
 	    Behavior b1 = new DriveForward(pilot);
-	    Behavior b3 = new GoTo(map, state, path);
+	    Behavior b3 = new GoTo(map, state, path, pilot);
 	   
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
 	    Behavior [] bArray = { b1, b2, b3, b5};

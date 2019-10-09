@@ -54,13 +54,13 @@ public class VerifLocalisation implements Behavior{
 		//while(pilot.isMoving());	
 		//Button.ENTER.waitForPressAndRelease();
 		state[0] = path.remove(0);
+		System.out.println(state[0]);
 
 		if(state[0]!=state[2]){
-				System.out.println(state[0]);
-				verifposition();
-				turn();
-				pilot.forward();
-				Delay.msDelay(300);
+			verifposition();
+			turn();
+			pilot.forward();
+			Delay.msDelay(300);
 			
 			
 		}

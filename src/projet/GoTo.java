@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lejos.hardware.Button;
+import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
 //verif 
 
 /*
@@ -19,12 +21,14 @@ public class GoTo implements Behavior{
 	private int[] state;
 	private List<Integer> path;
 	private List<Integer> retour;
+	private MovePilot pilot;
 	
-	public GoTo(ArrayList<Integer> map2, int[]state, List<Integer> path){
+	public GoTo(ArrayList<Integer> map2, int[]state, List<Integer> path, MovePilot pilot){
 		this.map = map2;
 		this.state = state;
 		this.path = path;
 		this.retour = new ArrayList<Integer>();
+		this.pilot = pilot;
 	}
 	@Override
 	public boolean takeControl() {
@@ -35,6 +39,8 @@ public class GoTo implements Behavior{
 	public void action() {
 		System.out.println("GoTO");
 		Button.DOWN.waitForPress();
+		pilot.backward();
+		Delay.msDelay(350);
 		if(state[3]==0){
 			System.out.println("je suis un sauvageons");
 			if(state[4]==0){
