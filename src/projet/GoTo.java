@@ -32,8 +32,8 @@ public class GoTo implements Behavior{
 
 	@Override
 	public void action() {
-		Button.DOWN.waitForPress();
 		System.out.println("GoTO");
+		Button.DOWN.waitForPress();
 		if(state[3]==0){
 			System.out.println("je suis un sauvageons");
 			if(state[4]==0){

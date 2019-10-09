@@ -72,8 +72,8 @@ public class Main {
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			
-			//depart case 0, orienté vers la gauche
-			state[0]=4;state[1]=180;
+			//depart case 0 si sauvageon orienté vers la gauche (90)
+			state[0]=4;state[1]=270;
 		}
 		
 		if(state[3]==1){
@@ -106,6 +106,7 @@ public class Main {
 		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(61);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
 		MovePilot pilot = new MovePilot(chassis);
+		pilot.setAngularSpeed(20);
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
 		float[] sample = new float[4];
 		

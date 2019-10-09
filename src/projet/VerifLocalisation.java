@@ -8,6 +8,7 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
 
 /*
  * prend le control quand le robot passe sur une ligne noir,
@@ -35,7 +36,7 @@ public class VerifLocalisation implements Behavior{
 	@Override
 	public boolean takeControl() {
 		color.fetchSample(sample, 0);
-		return sample[0] == Color.BLACK;
+		return (sample[0] == Color.BLACK && (state[0] != state[2]));
 	}
 
 	/*
@@ -46,37 +47,45 @@ public class VerifLocalisation implements Behavior{
 	 */
 	public void action() {
 		System.out.println("ligne noir");
-		Button.ENTER.waitForPressAndRelease();
+		//Button.ENTER.waitForPressAndRelease();
 		//pilot.stop();
 		//pilot.travel(60);
-		//while(pilot.isMoving());
+		//while(pilot.isMoving());	
+		//Button.ENTER.waitForPressAndRelease();
 		state[0] = path.remove(0);
-		System.out.println(state[0]);
+
 		if(state[0]!=state[2]){
-			verifposition();
-			turn();
+				System.out.println(state[0]);
+				verifposition();
+				turn();
+				pilot.forward();
+				Delay.msDelay(300);
+			
+			
 		}
 		
 	}
 
 	private void turn() {
-
-		//pilot.rotate(state[1]-direction);
-		pilot.rotate(0);
-		System.out.println("rotate "+ (state[1]-direction));
+		int rotation = state[1]-direction;		
+		pilot.rotate(rotation);// tourne dans le sens anti-horaire
 		while(pilot.isMoving());
 		state[1]=direction;
 	}
 	private void verifposition() {
-		if(state[0]-path.get(0)==-1);//right
-			direction = 90;
-		if(state[0]-path.get(0)==1 );//left
-			direction = 270;
-		if(state[0]-path.get(0)==5);//up
-			direction = 0;
-		if(state[0]-path.get(0)==-5);//down
-			direction = 180;
-		
+		if(state[0]-path.get(0)==-1) {
+			direction = 90;//right
+		}	
+		else if(state[0]-path.get(0)==1 ) {
+			direction = 270;//left
+		}
+		else if(state[0]-path.get(0)==-5) {
+			direction = 180;//down
+		}		
+		else if(state[0]-path.get(0)==5) {
+			direction = 0;//up
+		}
+			
 	}
 	@Override
 	public void suppress() {
