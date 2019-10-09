@@ -1,5 +1,6 @@
 package projet;
 
+import java.awt.Color;
 import java.io.*; 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,9 @@ public class Main {
 	private ArrayList<Integer> map = new ArrayList(35);
 	
 	
-	// contient la position du robot, sa direction et les coordonnées de destination
-	private int[] state = new int[3];
-	private List<Integer> path;
+	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit) et ca mission)
+	private int[] state = new int[5];
+	private List<Integer> path= new ArrayList<Integer>();
 	
 	Port portRoueD;
 	Port portRoueG;
@@ -51,10 +52,17 @@ public class Main {
 	
 	
 	public void initialise() {
-		Boolean Sauvage=true;
-		Boolean GardeDeLaNuit=false;
+		state[2]=4;//case de depart sauvageon 4; case de depart garde de la nuit 30
+		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		
-		if (Sauvage==true){
+		/* 0 pour aller au camp militaire le plus proche
+		 * 1 pour returne a notre ville
+		 * 2 pour aller a la ville adverse 
+		 * 3 pour le modele proie-prédateur
+		 */
+		state[4]=0;
+		
+		if (state[3]==0){
 			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
 			map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
 			map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
@@ -64,11 +72,11 @@ public class Main {
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			
-			//depart case 0, orienté vers la gauche, destination de la case 0
-			state[0]=4;state[1]=180;state[2]=0; 
+			//depart case 0, orienté vers la gauche
+			state[0]=4;state[1]=180;
 		}
 		
-		if(GardeDeLaNuit==true){
+		if(state[3]==1){
 			//map garde de la nuit (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
 			map.add(4);map.add(2);map.add(0);map.add(0);map.add(0);
 			map.add(1);map.add(2);map.add(0);map.add(0);map.add(0);
@@ -78,8 +86,8 @@ public class Main {
 			map.add(1);map.add(1);map.add(1);map.add(4);map.add(2);
 			map.add(1);map.add(1);map.add(1);map.add(1);map.add(2);
 			
-			//depart case 30, orienté vers la droite, destination de la case 28
-			state[0]=30;state[1]=90;state[2]=28; 
+			//depart case 30, orienté vers la droite
+			state[0]=30;state[1]=90; 
 		}
 		
 		portRoueD= LocalEV3.get().getPort("C");
@@ -91,6 +99,7 @@ public class Main {
 		EV3UltrasonicSensor ultrasonicSensor = new EV3UltrasonicSensor(portDistance);
 		EV3TouchSensor touchSensor = new EV3TouchSensor(portTouch);
 		EV3ColorSensor colorSensor = new EV3ColorSensor(portColor);
+		colorSensor.setFloodlight(lejos.robotics.Color.WHITE);
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
 		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-61);
@@ -103,14 +112,13 @@ public class Main {
 		Behavior b2 = new VerifLocalisation(map, state, path, colorSensor, pilot);
 	    Behavior b1 = new DriveForward(pilot);
 	    Behavior b3 = new GoTo(map, state, path);
-	    Behavior b4 = new NextStep();
-	    //Behavior b2 = new BatteryLow(6.5f);
+	   
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
-	    Behavior [] bArray = {b3, b2, b1, b4, b5};
+	    Behavior [] bArray = { b1, b2, b3, b5};
 	    Arbitrator arbi = new Arbitrator(bArray);
 	      
-	    if(b4 instanceof StopBehavior) {
-	    	StopBehavior b = (StopBehavior)b4;
+	    if(b5 instanceof StopBehavior) {
+	    	StopBehavior b = (StopBehavior)b5;
 	    	b.setter(arbi);
 	    }
 	    arbi.go();

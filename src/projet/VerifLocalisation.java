@@ -3,6 +3,7 @@ package projet;
 import java.util.ArrayList;
 import java.util.List;
 
+import lejos.hardware.Button;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
 import lejos.robotics.navigation.MovePilot;
@@ -16,9 +17,9 @@ import lejos.robotics.subsumption.Behavior;
 public class VerifLocalisation implements Behavior{
 	
 	private ArrayList<Integer> map = new ArrayList(35);
-	private int[] state = new int[3];
+	private int[] state;
 	EV3ColorSensor color;
-	private float[] sample;
+	private float[] sample = new float[1];
 	private MovePilot pilot;
 	List<Integer> path;
 	private int direction;
@@ -29,6 +30,7 @@ public class VerifLocalisation implements Behavior{
 		this.state = state;
 		this.color = color;
 		this.path = path;
+		this.pilot=pilot;
 	}
 	@Override
 	public boolean takeControl() {
@@ -43,17 +45,27 @@ public class VerifLocalisation implements Behavior{
 	 * @see lejos.robotics.subsumption.Behavior#action()
 	 */
 	public void action() {
-		pilot.stop();
+		System.out.println("ligne noir");
+		Button.ENTER.waitForPressAndRelease();
+		//pilot.stop();
 		//pilot.travel(60);
 		//while(pilot.isMoving());
 		state[0] = path.remove(0);
-		verifposition();
-		turn();
+		System.out.println(state[0]);
+		if(state[0]!=state[2]){
+			verifposition();
+			turn();
+		}
 		
 	}
 
 	private void turn() {
-		pilot.rotate(state[1]-direction);
+
+		//pilot.rotate(state[1]-direction);
+		pilot.rotate(0);
+		System.out.println("rotate "+ (state[1]-direction));
+		while(pilot.isMoving());
+		state[1]=direction;
 	}
 	private void verifposition() {
 		if(state[0]-path.get(0)==-1);//right

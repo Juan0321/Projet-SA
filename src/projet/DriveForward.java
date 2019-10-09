@@ -17,9 +17,9 @@ public class DriveForward implements Behavior{
 
 	@Override
 	public void action() {
-		pilot.setLinearSpeed(5);
+		pilot.setLinearSpeed(15);
 		pilot.forward();
-		//while(pilot.isMoving());
+		while(pilot.isMoving());
 	}
 
 	@Override
