@@ -43,6 +43,7 @@ public class Main {
 	Wheel wheel2;
 	Chassis chassis; 
 	MovePilot pilot;
+
 	
 	public static void main(String [] args) {
 		Main m = new Main();
@@ -100,6 +101,14 @@ public class Main {
 		EV3TouchSensor touchSensor = new EV3TouchSensor(portTouch);
 		EV3ColorSensor colorSensor = new EV3ColorSensor(portColor);
 		colorSensor.setFloodlight(lejos.robotics.Color.WHITE);
+		
+		/*objet permettant de calibrer les couleurs. contient une methode getColor pour pouvoir récupérer la couleur
+		 * A mettre en commentaire si jamais ça bug
+		 * Pour l'utiliser: example d'utilisation en commentaire dans VerifLocalisation (et de l'appel de la classe 
+		 * + initialisation dans la classe main) partout ou j'ai mis "remplacer par..."
+		 * */
+		CalibrateColor color = new CalibrateColor(colorSensor);
+		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
 		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-54);
@@ -111,7 +120,7 @@ public class Main {
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
 		float[] sample = new float[4];
 		
-		Behavior b2 = new VerifLocalisation(map, state, path, colorSensor, pilot);
+		Behavior b2 = new VerifLocalisation(map, state, path, colorSensor,/*remplacer colorSensor par color*/ pilot);
 	    Behavior b1 = new DriveForward(pilot);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	   

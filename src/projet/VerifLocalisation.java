@@ -21,13 +21,15 @@ public class VerifLocalisation implements Behavior{
 	private ArrayList<Integer> map = new ArrayList(35);
 	private int[] state;
 	EV3ColorSensor color;
+	/*remplacer la ligne au dessus par:
+	 * CalibrateColor color*/
 	private float[] sample = new float[1];
 	private MovePilot pilot;
 	List<Integer> path;
 	private int direction;
 
 	
-	public VerifLocalisation(ArrayList<Integer> map2, int[]state, List<Integer> path, EV3ColorSensor color, MovePilot pilot) {
+	public VerifLocalisation(ArrayList<Integer> map2, int[]state, List<Integer> path, EV3ColorSensor color,/*remplacer EV3ColorSensor color par CalibrateColor color*/ MovePilot pilot) {
 		this.map = map2;
 		this.state = state;
 		this.color = color;
@@ -38,6 +40,8 @@ public class VerifLocalisation implements Behavior{
 	public boolean takeControl() {
 		color.fetchSample(sample, 0);
 		return (sample[0] == Color.BLACK && (state[0] != state[2]));
+		/*remplacer la ligne au dessus par:
+		 * return (capteur.getColor().equalsIgnoreCase("Black") && (state[0] != state[2]));*/
 	}
 
 	/*
