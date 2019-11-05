@@ -20,16 +20,19 @@ public class VerifLocalisation implements Behavior{
 	
 	private ArrayList<Integer> map = new ArrayList(35);
 	private int[] state;
-	EV3ColorSensor color;
+	//EV3ColorSensor color;
 	/*remplacer la ligne au dessus par:
-	 * CalibrateColor color*/
+	 * */
+	CalibrateColor color;
 	private float[] sample = new float[1];
 	private MovePilot pilot;
 	List<Integer> path;
 	private int direction;
 
 	
-	public VerifLocalisation(ArrayList<Integer> map2, int[]state, List<Integer> path, EV3ColorSensor color,/*remplacer EV3ColorSensor color par CalibrateColor color*/ MovePilot pilot) {
+	//public VerifLocalisation(ArrayList<Integer> map2, int[]state, List<Integer> path, EV3ColorSensor color,/*remplacer EV3ColorSensor color par CalibrateColor color*/ MovePilot pilot) {
+	public VerifLocalisation(ArrayList<Integer> map2, int[]state, List<Integer> path, CalibrateColor color,/*remplacer EV3ColorSensor color par CalibrateColor color*/ MovePilot pilot) {
+	
 		this.map = map2;
 		this.state = state;
 		this.color = color;
@@ -38,10 +41,10 @@ public class VerifLocalisation implements Behavior{
 	}
 	@Override
 	public boolean takeControl() {
-		color.fetchSample(sample, 0);
-		return (sample[0] == Color.BLACK && (state[0] != state[2]));
-		/*remplacer la ligne au dessus par:
-		 * return (capteur.getColor().equalsIgnoreCase("Black") && (state[0] != state[2]));*/
+		//color.fetchSample(sample, 0);
+		//return (sample[0] == Color.BLACK /*&& (state[5] == 1)/*&& (state[0] != state[2])*/);
+		/*remplacer la ligne au dessus par:*/
+		return (color.getColor().equalsIgnoreCase("Black") && (state[0] != state[2])&& (state[5] == 1));
 	}
 
 	/*
@@ -52,23 +55,23 @@ public class VerifLocalisation implements Behavior{
 	 */
 	public void action() {
 		System.out.println("ligne noir");
-		//Button.ENTER.waitForPressAndRelease();
-		//pilot.stop();
-		//pilot.travel(60);
-		//while(pilot.isMoving());	
-		//Button.ENTER.waitForPressAndRelease();
 		state[0] = path.remove(0);
 		System.out.println(state[0]);
 
 		if(state[0]!=state[2]){
 			verifposition();
-			turn();
-			pilot.forward();
-			Delay.msDelay(300);
+			state[5]=0;
+			turn2();
+			//ici: 
 			
-			
+			//pilot.forward();
+			//Delay.msDelay(300);	
 		}
-		
+		else{
+			state[5]=1;
+		}
+		//state[5]=0;
+		//System.out.println("State[5](0)="+ state[5]);
 	}
 
 	private void turn() {
@@ -77,6 +80,59 @@ public class VerifLocalisation implements Behavior{
 		while(pilot.isMoving());
 		state[1]=direction;
 	}
+	private void turn2() {
+		int rotation = state[1]-direction;	
+		
+		/*if (rotation==90 || rotation==-90){
+			pilot.travel(-36);
+			pilot.rotate(rotation);	
+			while(pilot.isMoving());
+			pilot.forward();
+			while(color.getColor().equalsIgnoreCase("Black"));
+			pilot.stop();
+		}
+		else if(rotation==180){
+			pilot.travel(-36);
+			pilot.rotate(rotation);	
+			while(pilot.isMoving());
+			pilot.forward();
+			while(color.getColor().equalsIgnoreCase("Black"));
+			pilot.stop();
+			
+			pilot.travel(-36);
+			pilot.rotate(rotation);	
+			while(pilot.isMoving());
+			pilot.forward();
+			while(color.getColor().equalsIgnoreCase("Black"));
+			pilot.stop();
+		}*/
+		if (rotation==90){
+			pilot.rotate(rotation);	
+			while(pilot.isMoving());
+		}
+		if ( rotation==-90){
+			pilot.forward();
+			Delay.msDelay(500);
+			pilot.rotate(rotation);	
+			while(pilot.isMoving());
+		}
+		else if(rotation==180 || rotation==-180){
+			
+			pilot.rotate(90);	
+			while(pilot.isMoving());
+			pilot.backward();
+			while(!(color.getColor().equalsIgnoreCase("Black")));
+			pilot.stop();
+			
+			pilot.rotate(90);	
+			while(pilot.isMoving());
+		}
+		
+		state[1]=direction;
+		
+	}
+	
+
 	private void verifposition() {
 		if(state[0]-path.get(0)==-1) {
 			direction = 90;//right

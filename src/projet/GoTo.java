@@ -37,10 +37,11 @@ public class GoTo implements Behavior{
 
 	@Override
 	public void action() {
+		state[5]=1;
 		System.out.println("GoTO");
 		Button.DOWN.waitForPress();
-		pilot.backward();
-		Delay.msDelay(350);
+		//pilot.backward();
+		//Delay.msDelay(350);
 		if(state[3]==0){
 			System.out.println("je suis un sauvageons");
 			if(state[4]==0){

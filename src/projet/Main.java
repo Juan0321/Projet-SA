@@ -25,8 +25,9 @@ public class Main {
 	private ArrayList<Integer> map = new ArrayList(35);
 	
 	
-	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit) et ca mission)
-	private int[] state = new int[5];
+	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit), ca mission 
+	// et s'il est entraint de rouler[1] ou pas[0])
+	private int[] state = new int[6];
 	private List<Integer> path= new ArrayList<Integer>();
 	
 	Port portRoueD;
@@ -55,6 +56,7 @@ public class Main {
 	public void initialise() {
 		state[2]=30;//case de depart sauvageon 4; case de depart garde de la nuit 30
 		state[3]=1;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
+		state[5]=1;//par defaut il avance
 		
 		/* 0 pour aller au camp militaire le plus proche
 		 * 1 pour returne a notre ville
@@ -111,17 +113,20 @@ public class Main {
 		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
-		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-54);
-		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(54);
+		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52);
+		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
 		MovePilot pilot = new MovePilot(chassis);
 		pilot.setAngularSpeed(20);
+		pilot.setLinearAcceleration(1);
 		pilot.setLinearSpeed(50);
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
 		float[] sample = new float[4];
 		
-		Behavior b2 = new VerifLocalisation(map, state, path, colorSensor,/*remplacer colorSensor par color*/ pilot);
-	    Behavior b1 = new DriveForward(pilot);
+		//Behavior b2 = new VerifLocalisation(map, state, path, colorSensor,/*remplacer colorSensor par color*/ pilot);
+		Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
+
+	    Behavior b1 = new DriveForward(pilot,state);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	   
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
