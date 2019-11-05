@@ -123,9 +123,7 @@ public class Main {
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
 		float[] sample = new float[4];
 		
-		//Behavior b2 = new VerifLocalisation(map, state, path, colorSensor,/*remplacer colorSensor par color*/ pilot);
 		Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
-
 	    Behavior b1 = new DriveForward(pilot,state);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	   

@@ -22,13 +22,15 @@ public class GoTo implements Behavior{
 	private List<Integer> path;
 	private List<Integer> retour;
 	private MovePilot pilot;
+	private Dijkstra dij;
 	
-	public GoTo(ArrayList<Integer> map2, int[]state, List<Integer> path, MovePilot pilot){
-		this.map = map2;
+	public GoTo(ArrayList<Integer> map, int[]state, List<Integer> path, MovePilot pilot){
+		this.map = map;
 		this.state = state;
 		this.path = path;
 		this.retour = new ArrayList<Integer>();
 		this.pilot = pilot;
+		this.dij = new Dijkstra ();
 	}
 	@Override
 	public boolean takeControl() {
@@ -67,6 +69,8 @@ public class GoTo implements Behavior{
 		}
 		else{
 			System.out.println("je suis GDLN");
+			int graph[][] = dij.GrapheCreator(map);
+	        dij.dijkstra(graph, 30); 
 			if(state[4]==0){
 				System.out.println("Mission 1");
 				path.add(30);path.add(31);path.add(32);path.add(33);path.add(28);

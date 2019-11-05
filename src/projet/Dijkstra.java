@@ -35,7 +35,7 @@ public class Dijkstra {
 	// Function that implements Dijkstra's single source shortest path 
     // algorithm for a graph represented using adjacency matrix 
     // representation 
-    void dijkstra(int graph[][], int src) 
+    public List<Integer> dijkstra(int graph[][], int src) 
     { 
     	List<List<Integer>>  chemin= new ArrayList<List<Integer>>() ;
         int dist[] = new int[V]; // The output array. dist[i] will hold 
@@ -81,22 +81,14 @@ public class Dijkstra {
         } 
   
         // print the constructed distance array 
-        printSolution(dist, chemin); 
+        //printSolution(dist, chemin); 
+        return chemin.get(28);
     } 
   
     // Driver method 
     public static void main(String[] args) 
     { 
-        /* Let us create the example graph discussed above *
-       int graph[][] = new int[][] { { 0, 4, 0, 0, 0, 0, 0, 8, 0 }, 
-                                      { 4, 0, 8, 0, 0, 0, 0, 11, 0 }, 
-                                      { 0, 8, 0, 7, 0, 4, 0, 0, 2 }, 
-                                      { 0, 0, 7, 0, 9, 14, 0, 0, 0 }, 
-                                      { 0, 0, 0, 9, 0, 10, 0, 0, 0 }, 
-                                      { 0, 0, 4, 14, 10, 0, 2, 0, 0 }, 
-                                      { 0, 0, 0, 0, 0, 2, 0, 1, 6 }, 
-                                      { 8, 11, 0, 0, 0, 0, 1, 0, 7 }, 
-                                      { 0, 0, 2, 0, 0, 0, 6, 7, 0 } }; */
+        
     	ArrayList<Integer> map = new ArrayList<Integer>(35);
     	map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
 		map.add(0);map.add(2);map.add(1);map.add(1);map.add(1);
@@ -138,7 +130,7 @@ public class Dijkstra {
 	}
 
 	//fonction pour cree le graphe a partir du MAP
-	private static int[][] GrapheCreator(ArrayList<Integer> map) {
+	static int[][] GrapheCreator(ArrayList<Integer> map) {
 		int graph[][] = new int[35][35];
 		for(int i=0; i<35 ; i++){
 			for(int j=0; j<35 ; j++){
@@ -146,7 +138,7 @@ public class Dijkstra {
 					if (map.get(i)== 3){
 						graph[i][j]= 5;
 					}else if(map.get(i)==2){
-						graph[i][j]= 6;
+						graph[i][j]= 10;
 					}else{
 						graph[i][j]= 1;
 					}
