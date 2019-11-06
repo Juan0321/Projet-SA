@@ -35,7 +35,7 @@ public class Dijkstra {
 	// Function that implements Dijkstra's single source shortest path 
     // algorithm for a graph represented using adjacency matrix 
     // representation 
-    public List<Integer> dijkstra(int graph[][], int src) 
+    public List<Integer> dijkstra(int graph[][], int src, int destination) 
     { 
     	List<List<Integer>>  chemin= new ArrayList<List<Integer>>() ;
         int dist[] = new int[V]; // The output array. dist[i] will hold 
@@ -82,7 +82,7 @@ public class Dijkstra {
   
         // print the constructed distance array 
         //printSolution(dist, chemin); 
-        return chemin.get(28);
+        return chemin.get(destination);
     } 
   
     // Driver method 
@@ -99,7 +99,7 @@ public class Dijkstra {
 		map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
     	int graph[][] = GrapheCreator(map);
         Dijkstra t = new Dijkstra (); 
-        t.dijkstra(graph, 4); 
+        t.dijkstra(graph, 4,0); 
         //see(graph);
        // see(map);
     }

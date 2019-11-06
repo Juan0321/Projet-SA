@@ -1,5 +1,6 @@
 package projet;
 
+import lejos.hardware.Button;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
@@ -21,9 +22,11 @@ public class DriveForward implements Behavior{
 
 	@Override
 	public void action() {
+		System.out.println("Drive500");
 		pilot.forward();
 		Delay.msDelay(500);
 		state[5]=1;
+		System.out.println("Drive");
 		while(pilot.isMoving());
 		
 	}

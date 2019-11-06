@@ -48,10 +48,9 @@ public class GoTo implements Behavior{
 			System.out.println("je suis un sauvageons");
 			if(state[4]==0){
 				System.out.println("Mission 1");
-				path.add(4);path.add(3);path.add(2);path.add(1);path.add(0);
+				newpath(0);
 				state[2]=0;
 				state[4]=1;
-				retour.add(0);retour.add(1);retour.add(2);retour.add(3);retour.add(4);
 			}
 			else if(state[4]==1){
 				System.out.println("Mission retour");
@@ -61,22 +60,19 @@ public class GoTo implements Behavior{
 			}
 			else if(state[4]==2){
 				System.out.println("Mission 2");
-				path.add(4);path.add(3);path.add(2);path.add(1);path.add(0);
+				newpath(30);
 				state[4]=1;
-				state[2]=0;
+				state[2]=30;
 			}
 			
 		}
 		else{
 			System.out.println("je suis GDLN");
-			int graph[][] = dij.GrapheCreator(map);
-	        dij.dijkstra(graph, 30); 
 			if(state[4]==0){
 				System.out.println("Mission 1");
-				path.add(30);path.add(31);path.add(32);path.add(33);path.add(28);
+				newpath(28);
 				state[2]=28;
 				state[4]=1;
-				retour.add(28);retour.add(33);retour.add(32);retour.add(31);retour.add(30);
 			}
 			else if(state[4]==1){
 				System.out.println("Mission retour");
@@ -84,10 +80,26 @@ public class GoTo implements Behavior{
 				path.addAll(retour);
 				state[2]=30;
 			}
+			else if(state[4]==2){
+				System.out.println("Mission 2");
+				newpath(4);
+				state[4]=1;
+				state[2]=4;
+			}
 		}
 		
 	}
-
+	private void newpath(int destination){
+		int graph[][] = dij.GrapheCreator(map);
+		List<Integer> PCC = dij.dijkstra(graph,state[2],destination);
+		path.clear();
+		path.addAll(PCC);
+		retour.clear();
+		for (int i=PCC.size()-1; i>=0; i--){
+			//path.add(PCC.get(i));
+			retour.add(PCC.get(i));
+		}
+	}
 	@Override
 	public void suppress() {
 		

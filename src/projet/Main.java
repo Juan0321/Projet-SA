@@ -63,7 +63,7 @@ public class Main {
 		 * 2 pour aller a la ville adverse 
 		 * 3 pour le modele proie-prédateur
 		 */
-		state[4]=0;
+		state[4]=2;
 		
 		if (state[3]==0){
 			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
@@ -113,11 +113,11 @@ public class Main {
 		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
-		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52);
-		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52);
+		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52.5);
+		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52.5);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
 		MovePilot pilot = new MovePilot(chassis);
-		pilot.setAngularSpeed(20);
+		pilot.setAngularSpeed(40);
 		pilot.setLinearAcceleration(1);
 		pilot.setLinearSpeed(50);
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
