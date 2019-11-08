@@ -23,6 +23,9 @@ public class GoTo implements Behavior{
 	private List<Integer> retour;
 	private MovePilot pilot;
 	private Dijkstra dij;
+	public int graph[][] = dij.GrapheCreator(map);
+	private int case900=0;
+	
 	
 	public GoTo(ArrayList<Integer> map, int[]state, List<Integer> path, MovePilot pilot){
 		this.map = map;
@@ -64,6 +67,13 @@ public class GoTo implements Behavior{
 				state[4]=1;
 				state[2]=30;
 			}
+			else if(state[4]==3){
+				System.out.println("Mission attaque");
+				addObstacle();
+				newpath(30);
+				map.set(case900, 5);
+				state[2]=30;
+			}
 			
 		}
 		else{
@@ -86,17 +96,41 @@ public class GoTo implements Behavior{
 				state[4]=1;
 				state[2]=4;
 			}
+			else if(state[4]==3){
+				System.out.println("Mission défense");
+				newpath(4);
+				state[2]=4;
+			}
 		}
 		
 	}
+	private void addObstacle() {
+			
+			if(state[1]==0) {
+				state[6]=state[0]-5*2;
+				case900 = state[0]-5;
+			}
+			else if(state[1]==90) {
+				state[6]=state[0]-1*2;
+				case900 = state[0]-1;
+			}
+			else if(state[1]==180) {
+				state[6]=state[0]+5*2;
+				case900 = state[0]+5;
+			}
+			else if(state[1]==270) {
+				state[6]=state[0]+1*2;
+				case900 = state[0]+1;
+			}
+			map.set(state[6], map.get(state[6])+900);
+			map.set(case900, map.get(case900)+900);
+		}
 	private void newpath(int destination){
-		int graph[][] = dij.GrapheCreator(map);
 		List<Integer> PCC = dij.dijkstra(graph,state[2],destination);
 		path.clear();
 		path.addAll(PCC);
 		retour.clear();
 		for (int i=PCC.size()-1; i>=0; i--){
-			//path.add(PCC.get(i));
 			retour.add(PCC.get(i));
 		}
 	}

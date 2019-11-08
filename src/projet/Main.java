@@ -27,7 +27,15 @@ public class Main {
 	
 	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit), ca mission 
 	// et s'il est entraint de rouler[1] ou pas[0])
-	private int[] state = new int[6];
+	/* state[0]:position du robot
+	 * state[1]: la direction
+	 * state[2]: les coordonnées de destination
+	 * state[3]: le camp du robot(sauvageons=0/Garde de la nuit=1)
+	 * state[4]: la mission du robot
+	 * state[5]: le robot peut rentrer dans VerifLocalisation[1] ou pas[0]
+	 * state[6]: la position du robot adverse (obstacle)
+	 */
+	private int[] state = new int[7];
 	private List<Integer> path= new ArrayList<Integer>();
 	
 	Port portRoueD;

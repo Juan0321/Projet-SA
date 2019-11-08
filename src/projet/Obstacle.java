@@ -13,13 +13,15 @@ public class Obstacle implements Behavior{
 	int[]state;
 	private MovePilot pilot;
 	private float[] sample= new float[1];
+	private CalibrateColor color;
 	
 
-	public Obstacle(EV3UltrasonicSensor dist,ArrayList<Integer> map, int[]state, MovePilot pilot){
+	public Obstacle(EV3UltrasonicSensor dist,ArrayList<Integer> map, int[]state, MovePilot pilot, CalibrateColor color){
 		this.dist=dist;
 		this.map = map;
 		this.state = state;
 		this.pilot = pilot;
+		this.color = color;
 	}
 	@Override
 	public boolean takeControl() {
@@ -32,9 +34,12 @@ public class Obstacle implements Behavior{
 	public void action() {
 		pilot.stop();
 		System.out.println("obstacle");
-		Button.RIGHT.waitForPressAndRelease();
+		pilot.backward();
+		while(!(color.getColor().equalsIgnoreCase("Black")));
+		state[2]=state[0];
 	}
 
+	
 	@Override
 	public void suppress() {
 		// TODO Auto-generated method stub
