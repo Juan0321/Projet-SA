@@ -113,8 +113,8 @@ public class Main {
 		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
-		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52.5);
-		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52.5);
+		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52.25);
+		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52.25);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
 		MovePilot pilot = new MovePilot(chassis);
 		pilot.setAngularSpeed(40);
@@ -126,9 +126,9 @@ public class Main {
 		Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
 	    Behavior b1 = new DriveForward(pilot,state, color);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
-	   
+	    Behavior b4 = new Obstacle(ultrasonicSensor, map, state, pilot);
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
-	    Behavior [] bArray = { b1, b2, b3, b5};
+	    Behavior [] bArray = { b1, b2, b3, b4, b5};
 	    Arbitrator arbi = new Arbitrator(bArray);
 	      
 	    if(b5 instanceof StopBehavior) {

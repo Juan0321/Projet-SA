@@ -37,7 +37,6 @@ public class VerifLocalisation implements Behavior{
 	}
 	@Override
 	public boolean takeControl() {
-		
 		return (color.getColor().equalsIgnoreCase("Black") && (state[0] != state[2])&& (state[5] == 1));
 	}
 
@@ -49,9 +48,8 @@ public class VerifLocalisation implements Behavior{
 	 */
 	public void action() {
 		state[5]=0;
-		System.out.println("ligne noir");
+		Delay.msDelay(50);
 		state[0] = path.remove(0);
-		System.out.println(state[0]);
 
 		if(state[0]!=state[2]){
 			verifposition();

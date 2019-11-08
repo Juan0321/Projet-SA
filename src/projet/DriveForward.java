@@ -24,14 +24,11 @@ public class DriveForward implements Behavior{
 
 	@Override
 	public void action() {
-		System.out.println("Drive500");
 		pilot.forward();
 		Delay.msDelay(500);
 		pilot.stop();
-		System.out.println("cette case est "+color.getColor());
 		timeWait();
 		state[5]=1;
-		System.out.println("Drive");
 		pilot.forward();
 		while(pilot.isMoving());
 		
