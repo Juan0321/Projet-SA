@@ -124,7 +124,7 @@ public class Main {
 		float[] sample = new float[4];
 		
 		Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
-	    Behavior b1 = new DriveForward(pilot,state);
+	    Behavior b1 = new DriveForward(pilot,state, color);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	   
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);

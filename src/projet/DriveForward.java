@@ -10,10 +10,12 @@ public class DriveForward implements Behavior{
 
 	private MovePilot pilot;
 	private int[] state;
+	 CalibrateColor color;
 	
-	public DriveForward(MovePilot pilot, int[] state) {
+	public DriveForward(MovePilot pilot, int[] state, CalibrateColor color) {
 		this.pilot = pilot;
 		this.state = state;
+		this.color = color;
 	}
 	@Override
 	public boolean takeControl() {
@@ -25,8 +27,12 @@ public class DriveForward implements Behavior{
 		System.out.println("Drive500");
 		pilot.forward();
 		Delay.msDelay(500);
+		pilot.stop();
+		System.out.println("cette case est "+color.getColor());
+		timeWait();
 		state[5]=1;
 		System.out.println("Drive");
+		pilot.forward();
 		while(pilot.isMoving());
 		
 	}
@@ -34,6 +40,17 @@ public class DriveForward implements Behavior{
 	@Override
 	public void suppress() {
 		pilot.stop();
+	}
+	public void timeWait(){
+		if(color.getColor().equalsIgnoreCase("Blue")){
+			Delay.msDelay(10000);
+		}else if(color.getColor().equalsIgnoreCase("Orange")){
+			Delay.msDelay(5000);
+		}else if(color.getColor().equalsIgnoreCase("White")){
+			
+		}else{
+			Delay.msDelay(1000);
+		}
 	}
 
 }

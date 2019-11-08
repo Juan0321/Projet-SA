@@ -48,13 +48,13 @@ public class VerifLocalisation implements Behavior{
 	 * @see lejos.robotics.subsumption.Behavior#action()
 	 */
 	public void action() {
+		state[5]=0;
 		System.out.println("ligne noir");
 		state[0] = path.remove(0);
 		System.out.println(state[0]);
 
 		if(state[0]!=state[2]){
 			verifposition();
-			state[5]=0;
 			turn2();
 		}
 		else{
