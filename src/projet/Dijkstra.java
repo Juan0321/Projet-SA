@@ -86,7 +86,7 @@ public class Dijkstra {
     } 
   
     // Driver method 
-    public static void main(String[] args) 
+    /*public static void main(String[] args) 
     { 
         
     	ArrayList<Integer> map = new ArrayList<Integer>(35);
@@ -102,7 +102,7 @@ public class Dijkstra {
         t.dijkstra(graph, 4,0); 
         //see(graph);
        // see(map);
-    }
+    *///}
     
     
     private String see(List list) {
@@ -130,20 +130,24 @@ public class Dijkstra {
 	}
 
 	//fonction pour cree le graphe a partir du MAP
-	static int[][] GrapheCreator(ArrayList<Integer> map) {
+	public int[][] GrapheCreator(ArrayList<Integer> map) {
 		int graph[][] = new int[35][35];
+		
 		for(int i=0; i<35 ; i++){
 			for(int j=0; j<35 ; j++){
 				if ((i==j+1 && i%5!=0) || (i==j-1 && i%5!=4) || i==j+5 || i==j-5){
+					
 					if (map.get(i)== 3){
 						graph[i][j]= 5;
 					}else if(map.get(i)==2){
 						graph[i][j]= 10;
+					}else if(map.get(i)==5){
+						graph[i][j]=900;
 					}else{
 						graph[i][j]= 1;
 					}
-				}
-				else {graph[i][j]=0;}
+				
+				}else {graph[i][j]=0;}
 			}
 		}
 		return graph;

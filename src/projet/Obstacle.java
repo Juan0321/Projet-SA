@@ -6,6 +6,7 @@ import lejos.hardware.Button;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
 
 public class Obstacle implements Behavior{
 	private EV3UltrasonicSensor dist;
@@ -27,15 +28,19 @@ public class Obstacle implements Behavior{
 	public boolean takeControl() {
 		// TODO Auto-generated method stub
 		dist.fetchSample(sample, 0);
-		return sample[0]<0.05;
+		return sample[0]<0.08 && state[5]==1;
 	}
 
 	@Override
 	public void action() {
 		pilot.stop();
+		pilot.backward();
+		Delay.msDelay(150);
+		pilot.stop();
 		System.out.println("obstacle");
 		pilot.backward();
 		while(!(color.getColor().equalsIgnoreCase("Black")));
+		pilot.stop();
 		state[2]=state[0];
 	}
 

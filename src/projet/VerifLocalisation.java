@@ -47,10 +47,11 @@ public class VerifLocalisation implements Behavior{
 	 * @see lejos.robotics.subsumption.Behavior#action()
 	 */
 	public void action() {
+		
 		state[5]=0;
 		Delay.msDelay(50);
 		state[0] = path.remove(0);
-
+		System.out.println(state[0]);
 		if(state[0]!=state[2]){
 			verifposition();
 			turn2();
@@ -72,24 +73,26 @@ public class VerifLocalisation implements Behavior{
 		int rotation = state[1]-direction;	
 		
 		if (rotation==90){
-			pilot.rotate(rotation);	
+			pilot.backward();
+			Delay.msDelay(150);
+			pilot.stop();
+			pilot.rotate(rotation, false);
 			while(pilot.isMoving());
 		}
 		if ( rotation==-90){
 			pilot.forward();
 			Delay.msDelay(500);
-			pilot.rotate(rotation);	
+			pilot.rotate(rotation, false);
 			while(pilot.isMoving());
 		}
 		else if(rotation==180 || rotation==-180){
-			
-			pilot.rotate(90);	
+			pilot.rotate(90, false);
 			while(pilot.isMoving());
 			pilot.backward();
 			while(!(color.getColor().equalsIgnoreCase("Black")));
 			pilot.stop();
 			
-			pilot.rotate(90);	
+			pilot.rotate(90, false);
 			while(pilot.isMoving());
 		}
 		
