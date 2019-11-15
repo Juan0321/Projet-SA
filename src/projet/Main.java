@@ -71,7 +71,7 @@ public class Main {
 		 * 2 pour aller a la ville adverse 
 		 * 3 pour le modele proie-prédateur
 		 */
-		state[4]=3;
+		state[4]=2;
 		
 		if (state[3]==0){
 			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
@@ -84,7 +84,7 @@ public class Main {
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			
 			//depart case 0 si sauvageon orienté vers la gauche (90)
-			state[0]=4;state[1]=270;state[2]=4;//case de depart sauvageon 4
+			state[0]=4;state[1]=270;state[2]=4;state[6]=30;//case de depart sauvageon 4
 		}
 		
 		if(state[3]==1){

@@ -33,15 +33,34 @@ public class Obstacle implements Behavior{
 
 	@Override
 	public void action() {
-		pilot.stop();
-		pilot.backward();
-		Delay.msDelay(150);
-		pilot.stop();
-		System.out.println("obstacle");
-		pilot.backward();
-		while(!(color.getColor().equalsIgnoreCase("Black")));
-		pilot.stop();
-		state[2]=state[0];
+		if(state[4]!=3){
+			pilot.stop();
+			state[2]=state[0];
+		}
+		else{
+			pilot.stop();
+			pilot.backward();
+			Delay.msDelay(150);
+			pilot.stop();
+			System.out.println("obstacle");
+			pilot.backward();
+			while(!(color.getColor().equalsIgnoreCase("Black")));
+			pilot.stop();
+			state[2]=state[0];
+			
+			if(state[1]==0) {
+				state[6]= state[0]-5*2;
+			}
+			else if(state[1]==90) {
+				state[6]= state[0]+1*2;
+			}
+			else if(state[1]==180) {
+				state[6]= state[0]+5*2;
+			}
+			else if(state[1]==270) {
+				state[6]= state[0]-1*2;
+			}
+		}
 	}
 
 	

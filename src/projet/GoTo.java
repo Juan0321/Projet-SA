@@ -126,32 +126,150 @@ public class GoTo implements Behavior{
 	}
 	private void addObstacle() {
 			
-			if(state[1]==0) {
-				state[6]= state[0]-5*2;
-				case900 = state[0]-5;
+		
+		/*int colorcase900=map.get(case900);
+		int colorcaseobstacle=map.get(state[6]);
+		map.set(case900, 5);
+		map.set(state[6], 5);
+		System.out.println(case900 +","+state[6]);
+		graph = dij.GrapheCreator(map);
+		map.set(case900, colorcase900);
+		map.set(state[6], colorcaseobstacle);*/
+		
+		
+		
+		/*0|1|2
+		 *3|4|5
+		 *6|7|8 
+		 *-1 pour rappeller qu'il est en dehors du map
+		 */
+		int[] colorcase=new int[9];
+		colorcase[4]=map.get(state[6]);
+		map.set(state[6], 5);
+		
+		if(state[6]+5>34){
+			colorcase[6]=-1;//0|1|2
+			colorcase[7]=-1;//3|4|5
+			colorcase[8]=-1;//6|7|8
+			colorcase[1]=map.get(state[6]-5);
+			map.set(state[6]-5, 5);
+			if(state[6]%5==0){
+				colorcase[0]=-1;
+				colorcase[3]=-1;
+				colorcase[2]=map.get(state[6]-5+1);
+				colorcase[5]=map.get(state[6]+1);
+				map.set(state[6]-5+1, 5);
+				map.set(state[6]+1, 5);
+			}else if(state[6]%5==4){
+				colorcase[2]=-1;
+				colorcase[5]=-1;
+				colorcase[0]=map.get(state[6]-5-1);
+				colorcase[3]=map.get(state[6]-1);
+				map.set(state[6]-5-1, 5);
+				map.set(state[6]-1, 5);	
+			}else{
+				colorcase[2]=map.get(state[6]-5+1);
+				colorcase[5]=map.get(state[6]+1);
+				colorcase[0]=map.get(state[6]-5-1);
+				colorcase[3]=map.get(state[6]-1);
+				map.set(state[6]+1, 5);
+				map.set(state[6]-5+1, 5);
+				map.set(state[6]-1, 5);
+				map.set(state[6]-5-1, 5);
 			}
-			else if(state[1]==90) {
-				state[6]= state[0]+1*2;
-				case900 = state[0]+1;
-			}
-			else if(state[1]==180) {
-				state[6]= state[0]+5*2;
-				case900 = state[0]+5;
-			}
-			else if(state[1]==270) {
-				state[6]= state[0]-1*2;
-				case900 = state[0]-1;
-			}
-			int colorcase900=map.get(case900);
-			int colorcaseobstacle=map.get(state[6]);
-			map.set(case900, 5);
-			map.set(state[6], 5);
-			System.out.println(case900 +","+state[6]);
-			graph = dij.GrapheCreator(map);
-			map.set(case900, colorcase900);
-			map.set(state[6], colorcaseobstacle);
 			
+			
+		}else if(state[6]-5<0){
+			colorcase[0]=-1;//0|1|2
+			colorcase[1]=-1;//3|4|5
+			colorcase[2]=-1;//6|7|8
+			colorcase[7]=map.get(state[6]+5);
+			map.set(state[6]+5, 5);
+			if(state[6]%5==0){
+				colorcase[3]=-1;
+				colorcase[6]=-1;
+				colorcase[5]=map.get(state[6]+1);
+				colorcase[8]=map.get(state[6]+5+1);
+				map.set(state[6]+1, 5);
+				map.set(state[6]+5+1, 5);
+			}else if(state[6]%5==4){
+				colorcase[5]=-1;
+				colorcase[8]=-1;
+				colorcase[3]=map.get(state[6]-1);
+				colorcase[6]=map.get(state[6]+5-1);
+				map.set(state[6]-1, 5);
+				map.set(state[6]+5-1, 5);	
+			}else{
+				colorcase[5]=map.get(state[6]+1);
+				colorcase[8]=map.get(state[6]+5+1);
+				colorcase[3]=map.get(state[6]-1);
+				colorcase[6]=map.get(state[6]+5-1);
+				map.set(state[6]+1, 5);
+				map.set(state[6]+5+1, 5);
+				map.set(state[6]-1, 5);
+				map.set(state[6]+5-1, 5);
+			}
 		}
+		
+		else{
+			colorcase[1]=map.get(state[6]-5);
+			colorcase[7]=map.get(state[6]+5);
+			map.set(state[6]-5, 5);
+			map.set(state[6]+5, 5);
+			if(state[6]%5==0){
+				colorcase[0]=-1;//0|1|2
+				colorcase[3]=-1;//3|4|5
+				colorcase[6]=-1;//6|7|8
+				colorcase[2]=map.get(state[6]-5+1);
+				colorcase[5]=map.get(state[6]+1);
+				colorcase[8]=map.get(state[6]+5+1);
+				map.set(state[6]-5+1, 5);
+				map.set(state[6]+1, 5);
+				map.set(state[6]+5+1, 5);
+			}else if(state[6]%5==4){
+				colorcase[2]=-1;
+				colorcase[5]=-1;
+				colorcase[8]=-1;
+				colorcase[0]=map.get(state[6]-5-1);
+				colorcase[3]=map.get(state[6]-1);
+				colorcase[6]=map.get(state[6]+5-1);
+				map.set(state[6]-5-1, 5);
+				map.set(state[6]-1, 5);
+				map.set(state[6]+5-1, 5);	
+			}else{
+				colorcase[0]=map.get(state[6]-5-1);
+				colorcase[2]=map.get(state[6]-5+1);
+				
+				colorcase[3]=map.get(state[6]-1);
+				colorcase[5]=map.get(state[6]+1);
+				
+				colorcase[6]=map.get(state[6]+5-1);
+				colorcase[8]=map.get(state[6]+5+1);
+				
+				map.set(state[6]-5-1, 5);
+				map.set(state[6]-5+1, 5);
+				
+				map.set(state[6]-1, 5);
+				map.set(state[6]+1, 5);
+				
+				map.set(state[6]+5-1, 5);
+				map.set(state[6]+5+1, 5);
+			}
+		}
+		
+		graph = dij.GrapheCreator(map);
+		int a=-6;
+		for(int i=0; i<9; i++){
+			if(i==3 || i==6){
+				a+=2;
+			}
+			if(colorcase[i]!=-1){
+				map.set(state[6]+a, colorcase[i]);
+			}
+			a+=1;
+		}
+		
+	}
 	private void newpath(int destination){
 		List<Integer> PCC = dij.dijkstra(graph,state[0],destination);
 		path.clear();
