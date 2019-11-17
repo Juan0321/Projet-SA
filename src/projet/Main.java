@@ -61,12 +61,15 @@ public class Main {
 		
 	   }
 	
-	
+	/*
+	 * initialisation des capteurs, moteurs ainsi que des behavior (création de l'arbitrator)
+	 */
 	public void initialise() {
 		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		state[5]=1;//par defaut il avance
 		
-		/* 0 pour aller au camp militaire le plus proche
+		/* state[4]=
+		 * 0 pour aller au camp militaire le plus proche
 		 * 1 pour retourne a notre ville
 		 * 2 pour aller a la ville adverse 
 		 * 3 pour le modele proie-prédateur
@@ -100,7 +103,7 @@ public class Main {
 			//depart case 30, orienté vers la droite
 			state[0]=30;state[1]=90;state[2]=30;state[6]=4;//case de depart garde de la nuit 30
 		}
-		
+		//initialisation des différent capteurs et moteurs
 		portRoueD= LocalEV3.get().getPort("C");
 		portRoueG= LocalEV3.get().getPort("B");
 		portDistance= LocalEV3.get().getPort("S4");
@@ -109,14 +112,9 @@ public class Main {
 		
 		EV3UltrasonicSensor ultrasonicSensor = new EV3UltrasonicSensor(portDistance);
 		EV3TouchSensor touchSensor = new EV3TouchSensor(portTouch);
+		
 		EV3ColorSensor colorSensor = new EV3ColorSensor(portColor);
 		colorSensor.setFloodlight(lejos.robotics.Color.WHITE);
-		
-		/*objet permettant de calibrer les couleurs. contient une methode getColor pour pouvoir récupérer la couleur
-		 * A mettre en commentaire si jamais ça bug
-		 * Pour l'utiliser: example d'utilisation en commentaire dans VerifLocalisation (et de l'appel de la classe 
-		 * + initialisation dans la classe main) partout ou j'ai mis "remplacer par..."
-		 * */
 		CalibrateColor color = new CalibrateColor(colorSensor);
 		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
@@ -128,13 +126,13 @@ public class Main {
 		pilot.setAngularSpeed(40);
 		pilot.setLinearAcceleration(1);
 		pilot.setLinearSpeed(50);
+	
 		Object[] para = new Object[] {map, state, path, pilot, colorSensor, ultrasonicSensor, touchSensor};
-		float[] sample = new float[4];
 		System.out.println("pret!");
 		Button.DOWN.waitForPress();		
 		
-		Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
 	    Behavior b1 = new DriveForward(pilot,state, color);
+	    Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	    Behavior b4 = new Obstacle(ultrasonicSensor, map, state, pilot, color);
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
@@ -145,9 +143,6 @@ public class Main {
 	    	StopBehavior b = (StopBehavior)b5;
 	    	b.setter(arbi);
 	    }
-	    arbi.go();
-		 
-		
-		
+	    arbi.go();		
 	}
 }

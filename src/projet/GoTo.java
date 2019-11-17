@@ -74,10 +74,8 @@ public class GoTo implements Behavior{
 				}
 				addObstacle();
 				newpath(30);
-				state[2]=30;
-				
+				state[2]=30;	
 			}
-			
 		}
 		else{
 			System.out.println("je suis GDLN");
@@ -108,8 +106,7 @@ public class GoTo implements Behavior{
 			else if(state[4]==4){
 				Button.DOWN.waitForPress();
 			}
-		}
-		
+		}	
 	}
 	private void intercepter() {
 		int colorcase=map.get(state[0]);
@@ -121,12 +118,9 @@ public class GoTo implements Behavior{
 		System.out.println(futursauvage+", "+state[2]);
 		map.set(state[0], colorcase);
 		graph = dij.GrapheCreator(map);
-		newpath(state[2]);
-		
+		newpath(state[2]);	
 	}
 	private void addObstacle() {
-			
-		
 		/*int colorcase900=map.get(case900);
 		int colorcaseobstacle=map.get(state[6]);
 		map.set(case900, 5);
@@ -134,9 +128,7 @@ public class GoTo implements Behavior{
 		System.out.println(case900 +","+state[6]);
 		graph = dij.GrapheCreator(map);
 		map.set(case900, colorcase900);
-		map.set(state[6], colorcaseobstacle);*/
-		
-		
+		map.set(state[6], colorcaseobstacle);*/		
 		
 		/*0|1|2
 		 *3|4|5

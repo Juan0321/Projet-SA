@@ -24,11 +24,12 @@ public class DriveForward implements Behavior{
 
 	@Override
 	public void action() {
+		//fait avancer le robot pendant une cour temps (0.5 seconde) afin qu'il ne reste pas bloqué sur une ligne noir.
 		pilot.forward();
 		Delay.msDelay(500);
 		pilot.stop();
 		timeWait();
-		state[5]=1;
+		state[5]=1; // permet au robot de pouvoir à nouveau rentrer dans le behavior VerifLocalisation
 		pilot.forward();
 		while(pilot.isMoving());
 		
@@ -38,6 +39,8 @@ public class DriveForward implements Behavior{
 	public void suppress() {
 		pilot.stop();
 	}
+	/* fait effectuer un temps d'arrêt plus ou moins long (aucun, 1 seconde, 5 secondes, 10 secondes) selon la couleur de la case 
+	 * ou se trouve le robot */
 	public void timeWait(){
 		if(color.getColor().equalsIgnoreCase("Blue")){
 			Delay.msDelay(10000);
