@@ -35,8 +35,9 @@ public class Main {
 	 * state[4]: la mission du robot
 	 * state[5]: le robot peut rentrer dans VerifLocalisation[1] ou pas[0]
 	 * state[6]: la position du robot adverse (obstacle)
+	 * state[7]: booléen disant si un message est reçu (bluetooth) 0=false, 1=true
 	 */
-	private int[] state = new int[7];
+	private int[] state = new int[8];
 	private List<Integer> path= new ArrayList<Integer>();
 	
 	Port portRoueD;
@@ -133,6 +134,8 @@ public class Main {
 		
 	    Behavior b1 = new DriveForward(pilot,state, color);
 	    Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
+	    Behavior b7 = new BluetoothSend(state, map);
+	    Behavior b6 = new BluetoothReception(state, pilot, color);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	    Behavior b4 = new Obstacle(ultrasonicSensor, map, state, pilot, color);
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
