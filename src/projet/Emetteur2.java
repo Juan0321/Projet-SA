@@ -14,7 +14,12 @@ public class Emetteur2 implements Runnable {
 	BTConnection btc;
 	
 	public Emetteur2(BTConnection btc){
-		this.btc=btc;
+		if (btc !=null) {
+			this.btc=btc;
+		}
+		else{
+			System.out.println("Pas de connexion");
+		}
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import lejos.remote.nxt.NXTConnection;
 import lejos.utility.Delay;
 
 public class BTMain {
-	static boolean GDLN=true;
+	static boolean GDLN=false;
 	public static void main(String[] args) {
 		String john="00:16:53:43:8E:49";
 		String sansa="";
@@ -24,7 +24,7 @@ public class BTMain {
 		String adresse=ed;
 		
 		BTConnector bt = new BTConnector();
-		BTConnection btc;
+		BTConnection btc=null;
 		if (GDLN){
 			//Delay.msDelay(2000);
 			//System.out.println("ici");
@@ -58,7 +58,11 @@ public class BTMain {
 			
 		}else{
 			//Button.RIGHT.waitForPressAndRelease();
-			btc = bt.waitForConnection(10000, NXTConnection.PACKET);
+			int i=0;
+			while (btc == null || i<10){
+				btc = bt.waitForConnection(10000, NXTConnection.PACKET);
+				i++;
+			}
 			//System.out.println("ici");
 			//Delay.msDelay(2000);
 			//Emetteur2 e=new Emetteur2(btc);
