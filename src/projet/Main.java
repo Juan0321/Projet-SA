@@ -12,12 +12,16 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
+import lejos.remote.nxt.BTConnection;
+import lejos.remote.nxt.BTConnector;
+import lejos.remote.nxt.NXTConnection;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
 import projet.StopBehavior;
 import projet.VerifLocalisation;
 
@@ -36,8 +40,9 @@ public class Main {
 	 * state[5]: le robot peut rentrer dans VerifLocalisation[1] ou pas[0]
 	 * state[6]: la position du robot adverse (obstacle)
 	 * state[7]: booléen disant si un message est reçu (bluetooth) 0=false, 1=true
+	 * state[8]: nombre de cases parcourues depuis le dernier envoie de sa position
 	 */
-	private int[] state = new int[8];
+	private int[] state = new int[9];
 	private List<Integer> path= new ArrayList<Integer>();
 	
 	Port portRoueD;
@@ -54,6 +59,14 @@ public class Main {
 	Wheel wheel2;
 	Chassis chassis; 
 	MovePilot pilot;
+	
+	String john="00:16:53:43:8E:49";
+	String sansa="";
+	String ed="00:16:53:43:AD:EE";
+	String adresse=ed;
+	
+	BTConnector bt = new BTConnector();
+	BTConnection btc=null;
 
 	
 	public static void main(String [] args) {
@@ -89,6 +102,16 @@ public class Main {
 			
 			//depart case 0 si sauvageon orienté vers la gauche (90)
 			state[0]=4;state[1]=270;state[2]=4;state[6]=30;//case de depart sauvageon 4
+			
+			int i=0;
+			while (btc == null || i<10){
+				btc = bt.waitForConnection(10000, NXTConnection.PACKET);
+				i++;
+			}
+			Thread t1 = new Thread(new Recepteur2(btc, state, map));
+			System.out.println("t1");
+			t1.start();
+	      
 		}
 		
 		if(state[3]==1){
@@ -103,6 +126,11 @@ public class Main {
 			
 			//depart case 30, orienté vers la droite
 			state[0]=30;state[1]=90;state[2]=30;state[6]=4;//case de depart garde de la nuit 30
+			btc = bt.connect("adresse", NXTConnection.PACKET);
+			Delay.msDelay(2000);
+			Thread t1 = new Thread(new Recepteur2(btc, state, map));
+			System.out.println("t1");
+			t1.start();
 		}
 		//initialisation des différent capteurs et moteurs
 		portRoueD= LocalEV3.get().getPort("C");
@@ -134,7 +162,7 @@ public class Main {
 		
 	    Behavior b1 = new DriveForward(pilot,state, color);
 	    Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
-	    Behavior b7 = new BluetoothSend(state, map);
+	    Behavior b7 = new BluetoothSend(state, map, btc);
 	    Behavior b6 = new BluetoothReception(state, pilot, color);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	    Behavior b4 = new Obstacle(ultrasonicSensor, map, state, pilot, color);

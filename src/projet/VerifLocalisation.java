@@ -57,6 +57,7 @@ public class VerifLocalisation implements Behavior{
 		Delay.msDelay(50);
 		state[0] = path.remove(0);
 		System.out.println(state[0]);
+		state[8] += 1;
 		if(state[0]!=state[2]){
 			verifposition();
 			turn2();
