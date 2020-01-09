@@ -21,6 +21,7 @@ public class BTMain {
 		String john="00:16:53:43:8E:49";
 		String sansa="";
 		String ed="00:16:53:43:AD:EE";
+		String margaery = "00:16:53:43:37:FC";
 		String adresse=ed;
 		
 		BTConnector bt = new BTConnector();

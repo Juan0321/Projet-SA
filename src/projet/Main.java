@@ -61,16 +61,17 @@ public class Main {
 	MovePilot pilot;
 	
 	String john="00:16:53:43:8E:49";
-	String sansa="";
+	String sansa="00:53:43:96:91";
 	String ed="00:16:53:43:AD:EE";
 	String adresse=ed;
 	
 	BTConnector bt = new BTConnector();
-	BTConnection btc=null;
+	BTConnection btc = null;
 
 	
 	public static void main(String [] args) {
 		Main m = new Main();
+		Button.ENTER.waitForPressAndRelease();
 		m.initialise();		
 		
 	   }
@@ -88,7 +89,7 @@ public class Main {
 		 * 2 pour aller a la ville adverse 
 		 * 3 pour le modele proie-prédateur
 		 */
-		state[4]=2;
+		state[4]=3;
 		
 		if (state[3]==0){
 			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
@@ -104,10 +105,10 @@ public class Main {
 			state[0]=4;state[1]=270;state[2]=4;state[6]=30;//case de depart sauvageon 4
 			
 			int i=0;
-			while (btc == null || i<10){
+			//while (btc == null || i<10){
 				btc = bt.waitForConnection(10000, NXTConnection.PACKET);
-				i++;
-			}
+				//i++;
+			//}
 			Thread t1 = new Thread(new Recepteur2(btc, state, map));
 			System.out.println("t1");
 			t1.start();
@@ -126,7 +127,10 @@ public class Main {
 			
 			//depart case 30, orienté vers la droite
 			state[0]=30;state[1]=90;state[2]=30;state[6]=4;//case de depart garde de la nuit 30
-			btc = bt.connect("adresse", NXTConnection.PACKET);
+			while(btc == null) {
+				btc = bt.connect(adresse, NXTConnection.PACKET);
+			}
+			
 			Delay.msDelay(2000);
 			Thread t1 = new Thread(new Recepteur2(btc, state, map));
 			System.out.println("t1");
