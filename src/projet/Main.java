@@ -113,8 +113,8 @@ public class Main {
 			//depart case 0, orienté vers la gauche (270)
 			state[0]=4;state[1]=270;state[2]=4;state[6]=30;
 			
-			int i=0;
-				btc = bt.waitForConnection(10000, NXTConnection.PACKET);
+			//Cette variable attend la demande de connection de l'autre robot
+			btc = bt.waitForConnection(10000, NXTConnection.PACKET);
 			
 			Thread t1 = new Thread(new Recepteur2(btc, state, map));
 			System.out.println("t1");
@@ -135,11 +135,12 @@ public class Main {
 			
 			//depart case 30, orienté vers la droite (90)
 			state[0]=30;state[1]=90;state[2]=30;state[6]=4;
+			
+			//envoi une demande de connection a l'adresse stocke dans la varialbe adresse
 			while(btc == null) {
 				btc = bt.connect(adresse, NXTConnection.PACKET);
 			}
 			
-			Delay.msDelay(2000);
 			Thread t1 = new Thread(new Recepteur2(btc, state, map));
 			t1.start();
 		}
