@@ -160,6 +160,9 @@ public class Main {
 		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
+		
+///--------------------------------------------------------------------------////////////////---------------------------------//////
+		
 		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52.25);
 		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52.25);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
@@ -172,6 +175,7 @@ public class Main {
 		System.out.println("pret!");
 		Button.DOWN.waitForPress();		
 		
+		//initialisation des behaviors
 	    Behavior b1 = new DriveForward(pilot,state, color);
 	    Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
 	    Behavior b7 = new BluetoothSend(state, map, btc);
