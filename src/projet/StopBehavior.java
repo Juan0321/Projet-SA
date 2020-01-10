@@ -6,16 +6,16 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
-
+	/**
+	 * arrête les comportement du robot si on appuie sur un bouton (bouton gauche)
+	 */
 public class StopBehavior implements Behavior {
 
 	private EV3UltrasonicSensor dist;
 	private EV3TouchSensor touch;
 	private MovePilot pilot;
 	private Arbitrator arbi;
-	/*
-	 * arrête les comportement du robot si on appuie sur un bouton (bouton gauche)
-	 */
+	
 	public StopBehavior(MovePilot pilot, EV3UltrasonicSensor dist, EV3TouchSensor touch) {
 		this.pilot = pilot;
 		this.dist = dist;

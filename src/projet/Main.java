@@ -84,7 +84,7 @@ public class Main {
 		
 	   }
 	
-	/*
+	/**
 	 * initialisation des capteurs, moteurs ainsi que des behavior (création de l'arbitrator)
 	 */
 	public void initialise() {

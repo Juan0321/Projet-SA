@@ -7,7 +7,9 @@ import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
-
+	/**
+	 * permet de détecter un obstacle via le capteur d'ultrason
+	 */
 public class Obstacle implements Behavior{
 	private EV3UltrasonicSensor dist;
 	private ArrayList<Integer> map;
@@ -16,9 +18,7 @@ public class Obstacle implements Behavior{
 	private float[] sample= new float[1];
 	private CalibrateColor color;
 	
-	/*
-	 * permet de détecter un obstacle via le capteur d'ultrason
-	 */
+	
 	public Obstacle(EV3UltrasonicSensor dist,ArrayList<Integer> map, int[]state, MovePilot pilot, CalibrateColor color){
 		this.dist=dist;
 		this.map = map;

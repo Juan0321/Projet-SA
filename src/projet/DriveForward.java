@@ -6,7 +6,7 @@ import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 
 /**
- * cette behaviors permet au robot de ce deplace en ligne droit pour atteinde une nouvelle case
+ * ce behaviors permet au robot de ce deplace en ligne droit pour atteinde une nouvelle case
  */
 public class DriveForward implements Behavior{ 
 
@@ -42,7 +42,8 @@ public class DriveForward implements Behavior{
 	public void suppress() {
 		pilot.stop();
 	}
-	/* fait effectuer un temps d'arrêt plus ou moins long (aucun, 1 seconde, 5 secondes, 10 secondes) selon la couleur de la case 
+	/**
+	 *  fait effectuer un temps d'arrêt plus ou moins long (aucun, 1 seconde, 5 secondes, 10 secondes) selon la couleur de la case 
 	 * ou se trouve le robot 
 	 * return= none
 	 */

@@ -9,7 +9,7 @@ import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 //verif 
 
-/*Ce behavior permet de:
+/**Ce behavior permet de:
  * - attribuer et changer la coordonnée de destination en fonction de la mission,
  * - calculer le chemin le plus court en fonction de la coordonnée actuelle du robot et de la coordonnée de destination,
  * - stocker le chemin auivre dans la List path
@@ -110,7 +110,8 @@ public class GoTo implements Behavior{
 		}	
 	}
 	
-	/*calcul le chemin pour intercepter le robot adverse en fonction de sa position
+	/**
+	 * calcul le chemin pour intercepter le robot adverse en fonction de sa position
 	 * pour cela, il calcul le chemin potentiel du robot adverse en suposant que celui ci prendra le plus court chemin et quele robot
 	 * adverse considere sa case actuelle comme un obstacle. Puis il calcul le chemin pour aller a la moitie du chemin du robot adverse
 	 * cette fonction return none
@@ -128,7 +129,8 @@ public class GoTo implements Behavior{
 		newpath(state[2]);// je calcul le chemin a la nouvelle destination
 	}
 	
-	/*cette fonction recree le graphique utiliser dans la classe dijkstra pour calculer le chemin le plus court en ajoutent la case 
+	/**
+	 * cette fonction recree le graphique utiliser dans la classe dijkstra pour calculer le chemin le plus court en ajoutent la case 
 	 * du robot adverse et les case autour comme des obstacles.
 	 * Pour cela il va tout d'abord stocker les couleurs de la case du robot adverse et les cases autours
 	 * Ensuite il changer les valeurs associees aux cases par la valeur 5(obstacle)
@@ -341,7 +343,8 @@ public class GoTo implements Behavior{
 	}
 	
 	
-	/*Cette fonction fait appelle a la clase dijkstra pour calculer le plus court chemin et stocker ce chemin dans la variable path
+	/**
+	 * Cette fonction fait appelle a la clase dijkstra pour calculer le plus court chemin et stocker ce chemin dans la variable path
 	 *Ensuit il actualiser la variable retour comme l'inverse de la variable path
 	 */
 	private void newpath(int destination){

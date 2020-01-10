@@ -11,7 +11,7 @@ import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 //verif 
 
-/*
+/**
  * prend le control quand le robot passe sur une ligne noir,
  * vérifie la couleur de la nouvelle case,
  * change les coordonnées actuelles du robot
@@ -35,7 +35,8 @@ public class VerifLocalisation implements Behavior{
 		this.path = path;
 		this.pilot=pilot;
 	}
-	/*On rentre dans le comportement si la couleur retourner par le capteur de couleur est le noir (le robot rencontre une ligne noir),
+	/**
+	 * On rentre dans le comportement si la couleur retourner par le capteur de couleur est le noir (le robot rencontre une ligne noir),
 	 * que la coordonnée actuelle du robot soit différente de la coordonnée de destination et que le programme est passé par 
 	 * un autre behavior (pour remettre le state[5] à 1), ceci pour éviter que le robot reste bloqué sur la ligne noir et rentre 
 	 * en boucle dans le behavior VerifLocalisation 
@@ -45,7 +46,7 @@ public class VerifLocalisation implements Behavior{
 		return (color.getColor().equalsIgnoreCase("Black") && (state[0] != state[2])&& (state[5] == 1));
 	}
 
-	/*
+	/**
 	 * permet de faire avancer le robot de la ligne noir jusqu'au centre de la case
 	 * met à jour la localisation du robot (tableau state[])
 	 * édite la liste path (premier élément = prochaines coordonnées)
@@ -69,7 +70,7 @@ public class VerifLocalisation implements Behavior{
 		//System.out.println("State[5](0)="+ state[5]);
 	}
 
-	/*
+	/**
 	 * méthode permettant au robot de tourner
 	 * la rotation effectué est calculé en soustrayant la direction que doit prendre le robot (direction) à sa direction actuelle (state[1])
 	 * ex: si le robot à une direction de 90° (vers la droite) et qu'il doit aller dans une direction de 180 (vers le bas) la rotation vaut 90-180=-90°
@@ -104,7 +105,7 @@ public class VerifLocalisation implements Behavior{
 		state[1]=direction;
 	}
 
-	/*
+	/**
 	 * calcul la direction vers laquelle doit aller le robot pour aller sur la prochaine case en fonction de la case ou se trouve le robot et
 	 * de la prochaine case dans le chemin
 	 */

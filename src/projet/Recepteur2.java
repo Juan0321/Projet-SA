@@ -9,7 +9,9 @@ import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnection;
 import lejos.remote.nxt.BTConnector;
-
+	/**
+	 * permet de recevoir les données envoyer par l'autre robot et de les ajouter à sa carte
+	 */
 public class Recepteur2 implements Runnable {
 	private ArrayList<Integer> map;
 
@@ -20,9 +22,7 @@ public class Recepteur2 implements Runnable {
 	private int[] state;
 	boolean valeur;
 	int position;
-	/*
-	 * permet de recevoir les données envoyer par l'autre robot et de les ajouter à sa carte
-	 */
+	
 	public Recepteur2(BTConnection btc, int[] state, ArrayList<Integer> map){
 		this.map =map;
 		this.state = state;
