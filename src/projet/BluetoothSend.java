@@ -16,12 +16,14 @@ public class BluetoothSend implements Behavior{
 	boolean connecter=true;
 	OutputStream os;
 	DataOutputStream dos;
-	
+	/*
+	 * initialise les éléments nécessaire pour envoyer un message à l'autre robot
+	 */
 	public BluetoothSend(int[] state, ArrayList<Integer> map, BTConnection btc) {
-		this.state = state;
-		this.map = map;
+		this.state = state; // permet de récupérer la position actuelle du robot pour l'envoyer
+		this.map = map; //permet de récupéré les cases connu par le robot
 		if (btc !=null) {
-			this.btc=btc;
+			this.btc=btc;//permet de récupérer la connexion avec l'autre robot pour envoyer des données
 		}
 		else{
 			System.out.println("Pas de connexion");
@@ -29,11 +31,22 @@ public class BluetoothSend implements Behavior{
 	}
 
 	@Override
+	/*rentre dans le comportement lorsque le robot à parcouru 2 cases depuis le dernier envoie ou lorsque le bouton du haut est pressé
+	 * (non-Javadoc)
+	 * @see lejos.robotics.subsumption.Behavior#takeControl()
+	 */
 	public boolean takeControl() {
 		return state[8] == 2 || Button.UP.isDown();
 	}
 
 	@Override
+	/*
+	 * envoi différente données selon que:
+	 * le bouton du haut est pressé -> envoi la carte du robot  
+	 * le robot à parcouru 2 cases -> envoi la position du robot
+	 * (non-Javadoc)
+	 * @see lejos.robotics.subsumption.Behavior#action()
+	 */
 	public void action() {
 		if(state[4]==3 && state[8]==2){
 		os = btc.openOutputStream();
@@ -63,7 +76,7 @@ public class BluetoothSend implements Behavior{
 				dos.writeBoolean(false);
 			for(int i =0; i<map.size(); i++){
 				s += map.get(i);
-				dos.writeInt(map.get(i));
+				dos.writeInt(map.get(i));// écrit une valeur dans le flux pour chaque valeur de la carte
 			}		
 				dos.flush(); // force l’envoi
 				dos.close();

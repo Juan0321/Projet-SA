@@ -47,20 +47,20 @@ public class VerifLocalisation implements Behavior{
 
 	/*
 	 * permet de faire avancer le robot de la ligne noir jusqu'au centre de la case
-	 * met à jour la localisation du robot (tableau state)
+	 * met à jour la localisation du robot (tableau state[])
 	 * édite la liste path (premier élément = prochaines coordonnées)
 	 * @see lejos.robotics.subsumption.Behavior#action()
 	 */
 	public void action() {
 		
-		state[5]=0;
+		state[5]=0; // fait en sorte que le robot doive avancer (passer dans le comportement driveForward)
 		Delay.msDelay(50);
-		state[0] = path.remove(0);
+		state[0] = path.remove(0);//met le premier élément du chemin
 		System.out.println(state[0]);
 		state[8] += 1;
 		if(state[0]!=state[2]){
 			verifposition();
-			turn2();
+			turn();
 		}
 		else{
 			state[5]=1;
@@ -69,13 +69,13 @@ public class VerifLocalisation implements Behavior{
 		//System.out.println("State[5](0)="+ state[5]);
 	}
 
+	/*
+	 * méthode permettant au robot de tourner
+	 * la rotation effectué est calculé en soustrayant la direction que doit prendre le robot (direction) à sa direction actuelle (state[1])
+	 * ex: si le robot à une direction de 90° (vers la droite) et qu'il doit aller dans une direction de 180 (vers le bas) la rotation vaut 90-180=-90°
+	 * la direction devient alors la direction actuelle du robot
+	 */
 	private void turn() {
-		int rotation = state[1]-direction;		
-		pilot.rotate(rotation);// tourne dans le sens anti-horaire
-		while(pilot.isMoving());
-		state[1]=direction;
-	}
-	private void turn2() {
 		int rotation = state[1]-direction;	
 		
 		if (rotation==90){
@@ -104,6 +104,10 @@ public class VerifLocalisation implements Behavior{
 		state[1]=direction;
 	}
 
+	/*
+	 * calcul la direction vers laquelle doit aller le robot pour aller sur la prochaine case en fonction de la case ou se trouve le robot et
+	 * de la prochaine case dans le chemin
+	 */
 	private void verifposition() {
 		if(state[0]-path.get(0)==-1) {
 			direction = 90;//right

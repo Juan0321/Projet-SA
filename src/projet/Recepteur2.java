@@ -20,6 +20,7 @@ public class Recepteur2 implements Runnable {
 	private int[] state;
 	boolean valeur;
 	int position;
+	
 	public Recepteur2(BTConnection btc, int[] state, ArrayList<Integer> map){
 		this.map =map;
 		this.state = state;

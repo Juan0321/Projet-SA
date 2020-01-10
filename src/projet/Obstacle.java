@@ -16,7 +16,9 @@ public class Obstacle implements Behavior{
 	private float[] sample= new float[1];
 	private CalibrateColor color;
 	
-
+	/*
+	 * permet de détecter un obstacle via le capteur d'ultrason
+	 */
 	public Obstacle(EV3UltrasonicSensor dist,ArrayList<Integer> map, int[]state, MovePilot pilot, CalibrateColor color){
 		this.dist=dist;
 		this.map = map;
@@ -26,10 +28,10 @@ public class Obstacle implements Behavior{
 	}
 	@Override
 	public boolean takeControl() {
-		// TODO Auto-generated method stub
 		dist.fetchSample(sample, 0);
-		/* rentre dans le comportement si la distance avec un objet est infèrieur à 5cm et que le robot n'est pas en train de tourner 
-		 * (s'il n'est pas dans le behavior VerifLocalisation) */
+		/* rentre dans le comportement si la distance avec un objet est inférieur à 5cm et que le robot n'est pas en train de tourner 
+		 * (s'il n'est pas dans le behavior VerifLocalisation) 
+		 */
 		return sample[0]<0.08 && state[5]==1; 
 	}
 
@@ -57,7 +59,7 @@ public class Obstacle implements Behavior{
 			 * dans le comportement GoTO et calculer un nouveau chemin en fonction de l'obstacle. */
 			state[2]=state[0]; 
 			
-			/*ajoute dans le tableau state[6] la case ou se trouve l'obstacle (l'autre robot) selon la direction actuelle du robot
+			/*ajoute dans le tableau state[6] la case où se trouve l'obstacle (l'autre robot) selon la direction actuelle du robot
 			 * (state[1]) quand il le détecte avec son capteur à ultrasons. */
 			if(state[1]==0) {
 				state[6]= state[0]-5*2;

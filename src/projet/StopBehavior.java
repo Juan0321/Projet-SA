@@ -13,7 +13,9 @@ public class StopBehavior implements Behavior {
 	private EV3TouchSensor touch;
 	private MovePilot pilot;
 	private Arbitrator arbi;
-	
+	/*
+	 * arrête les comportement du robot si on appuie sur un bouton (bouton gauche)
+	 */
 	public StopBehavior(MovePilot pilot, EV3UltrasonicSensor dist, EV3TouchSensor touch) {
 		this.pilot = pilot;
 		this.dist = dist;
