@@ -26,10 +26,12 @@ import projet.StopBehavior;
 import projet.VerifLocalisation;
 
 public class Main {	
-	//verif 
+	//cette variable stock la carte oú les robot vont ce deplace.
+	//chaque case de la carte est associe a un index de la liste.
+	// si la case est blanche ou innconnu = 0, vert = 1, bleu = 2, orange = 3, rouge = 4 et si la case contient un obstacle = 5
 	private ArrayList<Integer> map = new ArrayList(35);
-	
-	
+
+
 	// contient la position du robot, sa direction, les coordonnées de destination, le camp du robot(sauvageons/Garde de la nuit), ca mission 
 	// et s'il est entraint de rouler[1] ou pas[0])
 	/* state[0]:position du robot
@@ -44,7 +46,8 @@ public class Main {
 	 */
 	private int[] state = new int[9];
 	private List<Integer> path= new ArrayList<Integer>();
-	
+
+	//Varialbes necessaires pur utilises les senseurs et les moteurs du robot
 	Port portRoueD;
 	Port portRoueG;
 	Port portDistance;
@@ -59,11 +62,14 @@ public class Main {
 	Wheel wheel2;
 	Chassis chassis; 
 	MovePilot pilot;
-	
+
+	//variables pour stockes les adresse des robot utiliser dans le bluetooh
 	String john="00:16:53:43:8E:49";
 	String sansa="00:53:43:96:91";
 	String ed="00:16:53:43:AD:EE";
-	String adresse=ed;
+	String margaery="00:16:53:43:37:FC";
+	String cersei="00:16:53:43:63:D4";
+	String daenerys="00:16:53:43:9E:2F";
 	
 	BTConnector bt = new BTConnector();
 	BTConnection btc = null;
