@@ -70,6 +70,7 @@ public class Main {
 	String margaery="00:16:53:43:37:FC";
 	String cersei="00:16:53:43:63:D4";
 	String daenerys="00:16:53:43:9E:2F";
+	String adresse=ed;
 	
 	BTConnector bt = new BTConnector();
 	BTConnection btc = null;
