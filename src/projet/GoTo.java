@@ -116,33 +116,54 @@ public class GoTo implements Behavior{
 	 * cette fonction return none
 	 */
 	private void intercepter() {
-		int colorcase=map.get(state[0]);
-		map.set(state[0], 5);// on consider notre case actuelle comme un obstacle
+		int positionAdverser= state[6];
+		//on calcul le plus court chemin du robot adverse
+		state[6]=state[0];// on considere que on est l'obstacle du robot adverse
 		addObstacle();
-		List<Integer> PCC = dij.dijkstra(graph,state[6],30);//on calcule le chemin su robot adverse
+		List<Integer> PCC = dij.dijkstra(graph,positionAdverser,30);//on calcule le plus court chemin du robot adverse
+		state[6]=positionAdverser; // on revient a la valeur de depart
 		int futursauvage=PCC.size()/2;
 		state[2]=PCC.get(futursauvage);//on change notre case de destination a la case central du chemin du robot adverse
-		map.set(state[0], colorcase);
 		graph = dij.GrapheCreator(map);
 		newpath(state[2]);// je calcul le chemin a la nouvelle destination
 	}
+	
+	/*cette fonction recree le graphique utiliser dans la classe dijkstra pour calculer le chemin le plus court en ajoutent la case 
+	 * du robot adverse et les case autour comme des obstacles.
+	 * Pour cela il va tout d'abord stocker les couleurs de la case du robot adverse et les cases autours
+	 * Ensuite il changer les valeurs associees aux cases par la valeur 5(obstacle)
+	 * Ensuite il cree le graph
+	 * A la fin a l'aide des valeur stocker il changer les valeurs des cases a ses valeurs originals
+	 */
 	private void addObstacle() {	
 		
 		/*0|1|2
 		 *3|4|5
 		 *6|7|8 
 		 *-1 pour rappeller qu'il est en dehors du map
+		 *la variable color case va stocker les valeurs originales des cases obstacles
 		 */
 		int[] colorcase=new int[9];
 		colorcase[4]=map.get(state[6]);
 		map.set(state[6], 5);
 		
+		/*0|1|2
+		 *3|4|5
+		 *6|7|8 
+		 *cas ou le robot est situe en bas de la carte
+		 */
 		if(state[6]+5>34){
 			colorcase[6]=-1;//0|1|2
 			colorcase[7]=-1;//3|4|5
 			colorcase[8]=-1;//6|7|8
 			colorcase[1]=map.get(state[6]-5);
 			map.set(state[6]-5, 5);
+			
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe en bas a gauche de la carte
+			 */
 			if(state[6]%5==0){
 				colorcase[0]=-1;
 				colorcase[3]=-1;
@@ -150,13 +171,25 @@ public class GoTo implements Behavior{
 				colorcase[5]=map.get(state[6]+1);
 				map.set(state[6]-5+1, 5);
 				map.set(state[6]+1, 5);
+				
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe en bas a droite de la carte
+			 */
 			}else if(state[6]%5==4){
 				colorcase[2]=-1;
 				colorcase[5]=-1;
 				colorcase[0]=map.get(state[6]-5-1);
 				colorcase[3]=map.get(state[6]-1);
 				map.set(state[6]-5-1, 5);
-				map.set(state[6]-1, 5);	
+				map.set(state[6]-1, 5);
+				
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe en bas au centre de la carte
+			 */
 			}else{
 				colorcase[2]=map.get(state[6]-5+1);
 				colorcase[5]=map.get(state[6]+1);
@@ -168,13 +201,23 @@ public class GoTo implements Behavior{
 				map.set(state[6]-5-1, 5);
 			}
 			
-			
+		/*0|1|2
+		 *3|4|5
+		 *6|7|8 
+		 *cas ou le robot est situe en haut de la carte
+		 */	
 		}else if(state[6]-5<0){
 			colorcase[0]=-1;//0|1|2
 			colorcase[1]=-1;//3|4|5
 			colorcase[2]=-1;//6|7|8
 			colorcase[7]=map.get(state[6]+5);
 			map.set(state[6]+5, 5);
+			
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe en haut a gauche de la carte
+			 */	
 			if(state[6]%5==0){
 				colorcase[3]=-1;
 				colorcase[6]=-1;
@@ -182,13 +225,25 @@ public class GoTo implements Behavior{
 				colorcase[8]=map.get(state[6]+5+1);
 				map.set(state[6]+1, 5);
 				map.set(state[6]+5+1, 5);
+				
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe en haut a droite de la carte
+			 */	
 			}else if(state[6]%5==4){
 				colorcase[5]=-1;
 				colorcase[8]=-1;
 				colorcase[3]=map.get(state[6]-1);
 				colorcase[6]=map.get(state[6]+5-1);
 				map.set(state[6]-1, 5);
-				map.set(state[6]+5-1, 5);	
+				map.set(state[6]+5-1, 5);
+				
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe en haut au centre de la carte
+			 */	
 			}else{
 				colorcase[5]=map.get(state[6]+1);
 				colorcase[8]=map.get(state[6]+5+1);
@@ -200,12 +255,22 @@ public class GoTo implements Behavior{
 				map.set(state[6]+5-1, 5);
 			}
 		}
-		
+		/*0|1|2
+		 *3|4|5
+		 *6|7|8 
+		 *cas ou le robot est situe au centre de la carte
+		 */	
 		else{
 			colorcase[1]=map.get(state[6]-5);
 			colorcase[7]=map.get(state[6]+5);
 			map.set(state[6]-5, 5);
 			map.set(state[6]+5, 5);
+			
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe au centre a gauche de la carte
+			 */	
 			if(state[6]%5==0){
 				colorcase[0]=-1;//0|1|2
 				colorcase[3]=-1;//3|4|5
@@ -216,6 +281,12 @@ public class GoTo implements Behavior{
 				map.set(state[6]-5+1, 5);
 				map.set(state[6]+1, 5);
 				map.set(state[6]+5+1, 5);
+				
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe au centre a droite de la carte
+			 */	
 			}else if(state[6]%5==4){
 				colorcase[2]=-1;
 				colorcase[5]=-1;
@@ -225,7 +296,13 @@ public class GoTo implements Behavior{
 				colorcase[6]=map.get(state[6]+5-1);
 				map.set(state[6]-5-1, 5);
 				map.set(state[6]-1, 5);
-				map.set(state[6]+5-1, 5);	
+				map.set(state[6]+5-1, 5);
+			
+			/*0|1|2
+			 *3|4|5
+			 *6|7|8 
+			 *cas ou le robot est situe au centre au centre de la carte
+			 */	
 			}else{
 				colorcase[0]=map.get(state[6]-5-1);
 				colorcase[2]=map.get(state[6]-5+1);
@@ -246,8 +323,10 @@ public class GoTo implements Behavior{
 				map.set(state[6]+5+1, 5);
 			}
 		}
-		
+		// on recree le graphique avec la carte modifier
 		graph = dij.GrapheCreator(map);
+		
+		//on change les valeurs des cases a ses valeurs originals
 		int a=-6;
 		for(int i=0; i<9; i++){
 			if(i==3 || i==6){
@@ -260,6 +339,11 @@ public class GoTo implements Behavior{
 		}
 		
 	}
+	
+	
+	/*Cette fonction fait appelle a la clase dijkstra pour calculer le plus court chemin et stocker ce chemin dans la variable path
+	 *Ensuit il actualiser la variable retour comme l'inverse de la variable path
+	 */
 	private void newpath(int destination){
 		List<Integer> PCC = dij.dijkstra(graph,state[0],destination);
 		path.clear();
