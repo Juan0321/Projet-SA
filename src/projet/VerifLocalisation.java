@@ -35,7 +35,7 @@ public class VerifLocalisation implements Behavior{
 		this.path = path;
 		this.pilot=pilot;
 	}
-	/*rentre dans le comportement si la couleur retourner par le capteur de couleur est le noir (le robot rencontre une ligne noir),
+	/*On rentre dans le comportement si la couleur retourner par le capteur de couleur est le noir (le robot rencontre une ligne noir),
 	 * que la coordonnée actuelle du robot soit différente de la coordonnée de destination et que le programme est passé par 
 	 * un autre behavior (pour remettre le state[5] à 1), ceci pour éviter que le robot reste bloqué sur la ligne noir et rentre 
 	 * en boucle dans le behavior VerifLocalisation 

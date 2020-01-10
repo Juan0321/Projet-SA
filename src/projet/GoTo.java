@@ -9,22 +9,21 @@ import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 //verif 
 
-/*
- * donne la coordonnée de destination,
- * calcul le chemin le plus court en fonction de la coordonnée actuelle du robot et de la coordonnée de destination,
- * stock le chemin dans la List path
+/*Ce behavior permet de:
+ * - attribuer et changer la coordonnée de destination en fonction de la mission,
+ * - calculer le chemin le plus court en fonction de la coordonnée actuelle du robot et de la coordonnée de destination,
+ * - stocker le chemin auivre dans la List path
  * 
  */
 public class GoTo implements Behavior{
-	
+	//Attributs
 	private ArrayList<Integer> map;
 	private int[] state;
 	private List<Integer> path;
-	private List<Integer> retour;
+	private List<Integer> retour;//list qui stock l'inverse du chemin suivit. il est utiliser pour faire la mission retour.
 	private MovePilot pilot;
 	private Dijkstra dij;
 	public int graph[][]; 
-	private int case900=0;
 	
 	
 	public GoTo(ArrayList<Integer> map, int[]state, List<Integer> path, MovePilot pilot){
@@ -37,6 +36,7 @@ public class GoTo implements Behavior{
 		this.graph = dij.GrapheCreator(map);
 	}
 	@Override
+	//On rentre dans ce compostement si la casse actuelle est egal a la casse de destination du robot
 	public boolean takeControl() {
 		return state[0]==state[2];
 	}

@@ -5,12 +5,13 @@ import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 
-public class DriveForward implements Behavior{
-	//verif 
+// cette behaviors permet au robot de ce deplace en ligne droit pour atteinde une nouvelle case
+public class DriveForward implements Behavior{ 
 
+	//Attributs
 	private MovePilot pilot;
 	private int[] state;
-	 CalibrateColor color;
+	CalibrateColor color;
 	
 	public DriveForward(MovePilot pilot, int[] state, CalibrateColor color) {
 		this.pilot = pilot;
@@ -40,7 +41,9 @@ public class DriveForward implements Behavior{
 		pilot.stop();
 	}
 	/* fait effectuer un temps d'arrêt plus ou moins long (aucun, 1 seconde, 5 secondes, 10 secondes) selon la couleur de la case 
-	 * ou se trouve le robot */
+	 * ou se trouve le robot 
+	 * return= none
+	 */
 	public void timeWait(){
 		if(color.getColor().equalsIgnoreCase("Blue")){
 			Delay.msDelay(10000);

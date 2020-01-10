@@ -178,12 +178,11 @@ public class Main {
 		//initialisation des behaviors
 	    Behavior b1 = new DriveForward(pilot,state, color);
 	    Behavior b2 = new VerifLocalisation(map, state, path, color, pilot);
-	    Behavior b7 = new BluetoothSend(state, map, btc);
-	    Behavior b6 = new BluetoothReception(state, pilot, color);
+	    Behavior b6 = new BluetoothSend(state, map, btc);
 	    Behavior b3 = new GoTo(map, state, path, pilot);
 	    Behavior b4 = new Obstacle(ultrasonicSensor, map, state, pilot, color);
 	    Behavior b5 = new StopBehavior(pilot, ultrasonicSensor, touchSensor);
-	    Behavior [] bArray = { b1, b2, b3, b4, b5};
+	    Behavior [] bArray = { b1, b2, b3,b6, b4, b5};
 	    Arbitrator arbi = new Arbitrator(bArray);
 	      
 	    if(b5 instanceof StopBehavior) {
