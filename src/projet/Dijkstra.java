@@ -9,7 +9,12 @@ public class Dijkstra {
 	
     final int V = 35;
     
-    //  
+    /**
+     *  
+     * @param dist = list des poid de chaque index
+     * @param sptSet = liste de index avec le PCC deja calculer
+     * @return index avec le poid minimal
+     */
     public int minDistance(int dist[], Boolean sptSet[]) { 
         int valeur= Integer.MAX_VALUE;
         int minimun_index = -1; 
@@ -23,13 +28,18 @@ public class Dijkstra {
     } 
     
     
-	// Calsule le plus court chemin partant de src jusqu'a destination
+
+    /**
+     * Calcule le plus court chemin partant de src jusqu'a destination
+     * @param graph issu de la variable map
+     * @param src = position initial
+     * @param destination = destination renvoyer
+     * @return le plus court chemin de src a destination 
+     */
     public List<Integer> dijkstra(int graph[][], int src, int destination) { 
     	List<List<Integer>>  chemin= new ArrayList<List<Integer>>() ;
-        int dist[] = new int[V]; // liste de poid minimun 
-        // the shortest distance from src to i 
-  
-        // sptSet[i] will true if vertex i is included in shortest 
+        int dist[] = new int[V]; // list de poid 
+
         // sptSet[i] est egal a true si on a trouver le chemin le plus court pour l'indice i
         Boolean sptSet[] = new Boolean[V]; 
   
@@ -57,6 +67,11 @@ public class Dijkstra {
     } 
 
 	//fonction pour cree le graphique utilise par la fonction dijckstra a partir de la varialbe map
+    /**
+     * fonction pour cree le graphique utilise par la fonction dijckstra a partir de la varialbe map
+     * @param map = variable qui stock la carte utiliser par les robots
+     * @return le graphique associe a la carte stocker dans map
+     */
 	public int[][] GrapheCreator(ArrayList<Integer> map) {
 		int graph[][] = new int[35][35];
 		
@@ -74,7 +89,7 @@ public class Dijkstra {
 						graph[i][j]= 1;
 					}
 				
-				}else {graph[i][j]=0;}//si il y a pas de 
+				}else {graph[i][j]=0;}//si les case sont pas l'une a cote de l'autre
 			}
 		}
 		return graph;
