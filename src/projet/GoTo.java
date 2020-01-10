@@ -45,6 +45,7 @@ public class GoTo implements Behavior{
 	public void action() {
 		state[5]=1;
 		System.out.println("GoTO");
+		// on rentre dans une condition en fonction du camps de depart et la mission
 		if(state[3]==0){
 			System.out.println("je suis un sauvageons");
 			if(state[4]==0){
@@ -108,27 +109,24 @@ public class GoTo implements Behavior{
 			}
 		}	
 	}
+	
+	/*calcul le chemin pour intercepter le robot adverse en fonction de sa position
+	 * pour cela, il calcul le chemin potentiel du robot adverse en suposant que celui ci prendra le plus court chemin et quele robot
+	 * adverse considere sa case actuelle comme un obstacle. Puis il calcul le chemin pour aller a la moitie du chemin du robot adverse
+	 * cette fonction return none
+	 */
 	private void intercepter() {
 		int colorcase=map.get(state[0]);
-		map.set(state[0], 5);
-		graph = dij.GrapheCreator(map);
-		List<Integer> PCC = dij.dijkstra(graph,state[6],30);
+		map.set(state[0], 5);// on consider notre case actuelle comme un obstacle
+		addObstacle();
+		List<Integer> PCC = dij.dijkstra(graph,state[6],30);//on calcule le chemin su robot adverse
 		int futursauvage=PCC.size()/2;
-		state[2]=PCC.get(futursauvage);
-		System.out.println(futursauvage+", "+state[2]);
+		state[2]=PCC.get(futursauvage);//on change notre case de destination a la case central du chemin du robot adverse
 		map.set(state[0], colorcase);
 		graph = dij.GrapheCreator(map);
-		newpath(state[2]);	
+		newpath(state[2]);// je calcul le chemin a la nouvelle destination
 	}
-	private void addObstacle() {
-		/*int colorcase900=map.get(case900);
-		int colorcaseobstacle=map.get(state[6]);
-		map.set(case900, 5);
-		map.set(state[6], 5);
-		System.out.println(case900 +","+state[6]);
-		graph = dij.GrapheCreator(map);
-		map.set(case900, colorcase900);
-		map.set(state[6], colorcaseobstacle);*/		
+	private void addObstacle() {	
 		
 		/*0|1|2
 		 *3|4|5
