@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import lejos.hardware.Button;
 import lejos.remote.nxt.BTConnection;
 import lejos.robotics.subsumption.Behavior;
-
+/**
+ * Permet d'envoyer un message a l'autre robot
+ */
 public class BluetoothSend implements Behavior{
 	private ArrayList<Integer> map = new ArrayList(35);
 	private int[] state;

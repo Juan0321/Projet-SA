@@ -5,7 +5,9 @@ import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 
-// cette behaviors permet au robot de ce deplace en ligne droit pour atteinde une nouvelle case
+/**
+ * cette behaviors permet au robot de ce deplace en ligne droit pour atteinde une nouvelle case
+ */
 public class DriveForward implements Behavior{ 
 
 	//Attributs

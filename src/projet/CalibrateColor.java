@@ -20,7 +20,9 @@ import java.util.Properties;
 
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
-
+/**
+ * Permet de calibre le capteur couleur et de recupere les couleurs detectées
+ */
 public class CalibrateColor {
 //Attributs
 	
