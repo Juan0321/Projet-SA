@@ -160,9 +160,6 @@ public class Main {
 		
 		EV3LargeRegulatedMotor roueD = new EV3LargeRegulatedMotor(portRoueD);
 		EV3LargeRegulatedMotor roueG = new EV3LargeRegulatedMotor(portRoueG);
-		
-///--------------------------------------------------------------------------////////////////---------------------------------//////
-		
 		Wheel wheel1 = WheeledChassis.modelWheel(roueD, 56).offset(-52.25);
 		Wheel wheel2 = WheeledChassis.modelWheel(roueG, 56).offset(52.25);
 		Chassis chassis = new WheeledChassis(new Wheel[]{wheel1, wheel2}, 2); 
