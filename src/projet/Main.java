@@ -72,6 +72,7 @@ public class Main {
 	String daenerys="00:16:53:43:9E:2F";
 	String adresse=ed;
 	
+	//variable necessaire pour le bleutooh
 	BTConnector bt = new BTConnector();
 	BTConnection btc = null;
 
@@ -87,7 +88,7 @@ public class Main {
 	 * initialisation des capteurs, moteurs ainsi que des behavior (création de l'arbitrator)
 	 */
 	public void initialise() {
-		state[3]=0;//0 POur etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
+		state[3]=0;//0 Pour etre du cote des Sauvage et 1 pour etre du cote de la garde de la nuit
 		state[5]=1;//par defaut il avance
 		
 		/* state[4]=
@@ -98,6 +99,7 @@ public class Main {
 		 */
 		state[4]=3;
 		
+		//--SAUVAGE--//
 		if (state[3]==0){
 			//map Sauvage (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
 			map.add(4);map.add(2);map.add(1);map.add(1);map.add(0);
@@ -108,20 +110,19 @@ public class Main {
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			map.add(0);map.add(0);map.add(0);map.add(0);map.add(2);
 			
-			//depart case 0 si sauvageon orienté vers la gauche (90)
-			state[0]=4;state[1]=270;state[2]=4;state[6]=30;//case de depart sauvageon 4
+			//depart case 0, orienté vers la gauche (270)
+			state[0]=4;state[1]=270;state[2]=4;state[6]=30;
 			
 			int i=0;
-			//while (btc == null || i<10){
 				btc = bt.waitForConnection(10000, NXTConnection.PACKET);
-				//i++;
-			//}
+			
 			Thread t1 = new Thread(new Recepteur2(btc, state, map));
 			System.out.println("t1");
 			t1.start();
 	      
 		}
 		
+		//--GARDE DE LA NUIT--//
 		if(state[3]==1){
 			//map garde de la nuit (blanc=0, vert=1, bleu=2, orange=3, rouge=4)
 			map.add(4);map.add(2);map.add(0);map.add(0);map.add(0);
@@ -132,15 +133,14 @@ public class Main {
 			map.add(1);map.add(1);map.add(1);map.add(4);map.add(2);
 			map.add(1);map.add(1);map.add(1);map.add(1);map.add(2);
 			
-			//depart case 30, orienté vers la droite
-			state[0]=30;state[1]=90;state[2]=30;state[6]=4;//case de depart garde de la nuit 30
+			//depart case 30, orienté vers la droite (90)
+			state[0]=30;state[1]=90;state[2]=30;state[6]=4;
 			while(btc == null) {
 				btc = bt.connect(adresse, NXTConnection.PACKET);
 			}
 			
 			Delay.msDelay(2000);
 			Thread t1 = new Thread(new Recepteur2(btc, state, map));
-			System.out.println("t1");
 			t1.start();
 		}
 		//initialisation des différent capteurs et moteurs
